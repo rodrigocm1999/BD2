@@ -1,10 +1,3 @@
-create or replace view Vista_A as
-    select 
-    from
-    where
-
-;
-
 
 
 create or replace view Vista_B as
@@ -20,3 +13,23 @@ create or replace view Vista_B as
     group by jogo.id_jogo
 ;
 select * from Vista_B;
+
+
+
+
+
+
+create or replace view Vista_D as
+    select jog.nome
+    
+    from (select nome,id_jogador from jogadores where posicao='Extremo'  )jog,
+        (select count(id_golo),id_jogador 
+        from golo,jogo,jogador
+        where jogador.id_jogador=golo.id_jogador and golo.id_jogo=jogo.id_jogo 
+        and jogo.data_>=add_month(sysdate,-1)
+        group by id_jogador  )
+    
+    
+    where
+    
+;
