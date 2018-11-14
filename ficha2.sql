@@ -220,7 +220,7 @@ DECLARE
     tempQuant number;
 BEGIN
     for item in cur loop
-        select count(titulo) into tempQuant from livros where codigo_autor=item.codigo_autor;
+        select count(titulo) into tempQuant from livros where codigo_autor=item.codigo_autor and genero='Informática';
         insert into temp values (item.codigo_autor,tempQuant,reverse(item.nome));
     end loop;
 END;
