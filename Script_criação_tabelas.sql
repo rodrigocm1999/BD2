@@ -10,6 +10,7 @@ create table Jogador(
     Nome varchar2(80) not null,
     Idade number(2) not null,
     Posicao varchar2(80) not null,
+    Nacionalidade varchar2(80) not null,
 
     constraint FK_Id_Equipa foreign Key(Id_Equipa) references Equipa(Id_Equipa)
 );
@@ -46,7 +47,7 @@ create table Jogo(
     Id_Liga number(5) not null,
     N_Golos_Casa number(2) not null,
     N_Golos_Visitante number(2) not null,
-    data_ Data not null,
+    data_ Date not null,
    
     constraint FK_Id_Equipa_Casa foreign key(Id_Equipa_Casa) references Equipa(Id_Equipa),
     constraint FK_Id_Equipa_Visitante foreign key(Id_Equipa_Visitante) references Equipa(Id_Equipa),
@@ -56,10 +57,10 @@ create table Jogo(
 create table Golo(
     Id_Jogador number(5) not null,
     Id_Jogo number(5) not null,
-    N_Golos number(2) not null,
     Temp_Jogo date not null,
 
-    primary key(Id_Jogador, Id_Jogo) constraint FK_Id_Jogador_Golo foreign key(Id_Jogador) references Jogador(Id_Jogador),
+    primary key(Id_Jogador, Id_Jogo),
+    constraint FK_Id_Jogador_Golo foreign key(Id_Jogador) references Jogador(Id_Jogador),
     constraint FK_Id_Jogo_Golo foreign key(Id_Jogo) references Jogo(Id_jogo)
 );
 
@@ -106,13 +107,13 @@ alter table Equipa
 add Nome varchar2(80) not null;
 
 
-drop table Equipas_Liga cascade;
-drop table Treinador cascade;
+drop table Equipas_Liga;
 drop table Jogo;
-drop table Classificação cascade;
-drop table Sanção_Disciplinar cascade;
-drop table Equipa;
+drop table Classificação;
+drop table Sanção_Disciplinar;
 drop table Liga;
-drop table Golos_Guarda_Redes cascade;
-drop table Golo cascade;
-drop table Jogador cascade;
+drop table Golos_Guarda_Redes;
+drop table Golo ;
+drop table Treinador;
+drop table Jogador;
+drop table Equipa;
