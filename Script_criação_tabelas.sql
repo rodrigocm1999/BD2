@@ -97,7 +97,6 @@ create table Equipas_Liga(
 
 create table transferencias(
     
-    
 );
 
 
