@@ -20,12 +20,6 @@ insert into Equipa values (18, 'seschalotteh', 'San Miguel');
 insert into Equipa values (19, 'plearnedi', 'Murów');
 insert into Equipa values (20, 'tturrij', 'Tiberias');
 
-
-
-
-
-
-
 --jogadores
 insert into jogador values (1, 7, 'Micheil', 30, 'Extremo');
 insert into jogador values (2, 8, 'Gustav', 32, 'Extremo');
@@ -120,5 +114,47 @@ insert into Golos_Guarda_Redes values (58, 7);
 insert into Golos_Guarda_Redes values (59, 9);
 insert into Golos_Guarda_Redes values (60, 20);
 
+--Treinadores
+insert into Treinador values (1, 1, 'Grover', 'Principal', 'Indonesia');
+insert into Treinador values (2, 2, 'Gussie', 'Principal', 'China');
+insert into Treinador values (3, 3, 'Carmelina', 'Principal', 'Thailand');
+insert into Treinador values (4, 4, 'Karlis', 'Principal', 'Brazil');
+insert into Treinador values (5, 5, 'Anson', 'Principal', 'Armenia');
+insert into Treinador values (6, 6, 'Gillan', 'Principal', 'China');
+insert into Treinador values (7, 7, 'Aristotle', 'Principal', 'Mali');
+insert into Treinador values (8, 8, 'Alvis', 'Principal', 'Poland');
+insert into Treinador values (9, 9, 'Kati', 'Principal', 'China');
+insert into Treinador values (10, 10, 'Tessie', 'Principal', 'Sweden');
+insert into Treinador values (11, 11, 'Nancey', 'Principal', 'United States');
+insert into Treinador values (12, 12, 'Mona', 'Principal', 'China');
+insert into Treinador values (13, 13, 'Ulrica', 'Principal', 'Brazil');
+insert into Treinador values (14, 14, 'Clare', 'Principal', 'Finland');
+insert into Treinador values (15, 15, 'Omero', 'Principal', 'Albania');
+insert into Treinador values (16, 16, 'Chalmers', 'Principal', 'Peru');
+insert into Treinador values (17, 17, 'Donni', 'Principal', 'Finland');
+insert into Treinador values (18, 18, 'Lawry', 'Principal', 'Morocco');
+insert into Treinador values (19, 19, 'Aldous', 'Principal', 'China');
+insert into Treinador values (20, 20, 'Weston', 'Principal', 'Armenia');
+insert into Treinador values (21, 1, 'Rosemonde', 'Adjunto', 'Vietnam');
+insert into Treinador values (22, 2, 'Aaren', 'Adjunto', 'Nigeria');
+insert into Treinador values (23, 3, 'Daron', 'Adjunto', 'Greece');
+insert into Treinador values (24, 4, 'Sisile', 'Adjunto', 'China');
+insert into Treinador values (25, 5, 'Lura', 'Adjunto', 'France');
+insert into Treinador values (26, 6, 'Adelle', 'Adjunto', 'Iran');
+insert into Treinador values (27, 7, 'Pam', 'Adjunto', 'China');
+insert into Treinador values (28, 8, 'Simeon', 'Adjunto', 'Mexico');
+insert into Treinador values (29, 9, 'Jennilee', 'Adjunto', 'Philippines');
+insert into Treinador values (30, 10, 'Jasmina', 'Adjunto', 'United Kingdom');
+insert into Treinador values (31, 11, 'Munroe', 'Adjunto', 'Brazil');
+insert into Treinador values (32, 12, 'Holly', 'Adjunto', 'Canada');
+insert into Treinador values (33, 13, 'Tally', 'Adjunto', 'Colombia');
+insert into Treinador values (34, 14, 'Danyelle', 'Adjunto', 'Poland');
+insert into Treinador values (35, 15, 'Robbert', 'Adjunto', 'Indonesia');
+insert into Treinador values (36, 16, 'Mendy', 'Adjunto', 'Portugal');
+insert into Treinador values (37, 17, 'Maura', 'Adjunto', 'Peru');
+insert into Treinador values (38, 18, 'Padgett', 'Adjunto', 'Dominican Republic');
+insert into Treinador values (39, 19, 'Hermie', 'Adjunto', 'China');
+insert into Treinador values (40, 20, 'Prue', 'Adjunto', 'Russia');
 
+--Ligas
 
