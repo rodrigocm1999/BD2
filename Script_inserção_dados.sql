@@ -1,14 +1,14 @@
 --Equipas
-insert into Equipa values (1, 'dlasseter0', 'Gualeguaychú');
-insert into Equipa values (2, 'mstrike1', 'Gaoyan');
-insert into Equipa values (3, 'homara2', 'Quzi');
-insert into Equipa values (4, 'fbednell3', 'Tobilolong');
-insert into Equipa values (5, 'ahowler4', 'Tubuhue');
-insert into Equipa values (6, 'tvennard5', 'Leran Kulon');
-insert into Equipa values (7, 'tchoat6', 'Rassvet');
-insert into Equipa values (8, 'jveld7', 'Nyagan');
-insert into Equipa values (9, 'tteather8', 'Novovoronezh');
-insert into Equipa values (10, 'dimmings9', 'Ujung Gading');
+insert into Equipa values (1, 'dlasseter0', 'Lisboa');
+insert into Equipa values (2, 'mstrike1', 'Lisboa');
+insert into Equipa values (3, 'homara2', 'Lisboa');
+insert into Equipa values (4, 'fbednell3', 'Porto');
+insert into Equipa values (5, 'ahowler4', 'Porto');
+insert into Equipa values (6, 'tvennard5', 'Porto');
+insert into Equipa values (7, 'tchoat6', 'Coimbra');
+insert into Equipa values (8, 'jveld7', 'Coimbra');
+insert into Equipa values (9, 'tteather8', 'Coimbra');
+insert into Equipa values (10, 'dimmings9', 'Coimbra');
 insert into Equipa values (11, 'acordeuxa', 'Tapakrejo');
 insert into Equipa values (12, 'hjebbb', 'Bolboc');
 insert into Equipa values (13, 'spennigarc', 'Santa Cruz');
@@ -19,6 +19,7 @@ insert into Equipa values (17, 'cmawsong', 'Menggala');
 insert into Equipa values (18, 'seschalotteh', 'San Miguel');
 insert into Equipa values (19, 'plearnedi', 'Murów');
 insert into Equipa values (20, 'tturrij', 'Tiberias');
+
 
 --jogadores
 insert into jogador values (1, 7, 'Micheil', 30, 'Extremo', 'Portugal');
@@ -186,4 +187,4 @@ insert into Jogo values (18, 18, 3, 2, 2, 1, to_date('12/4/2017','MM/DD/YYYY'));
 insert into Jogo values (19, 19, 2, 1, 4, 4, to_date('4/1/2018','MM/DD/YYYY'));
 insert into Jogo values (20, 20, 1, 5, 3, 4, to_date('2/8/2018','MM/DD/YYYY'));
 
---
+--Golo
