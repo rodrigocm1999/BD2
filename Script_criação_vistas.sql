@@ -50,20 +50,44 @@ select * from Vista_D;
 
 
 
-create or replace view Vista_E as -- Not Ready
-    select count(*) as "Golos da equipa",equipa.nome as "Nome da Equipa"
+create or replace view Vista_E as -- Almost Ready 2º Try
+    select count(golo.temp_jogo) as golos,eq.nome as nome,eq.id_equipa as ID
     from golo,jogador,
-        (select id_equipa from equipa
+        (select id_equipa,nome from equipa
         where localidade='Lisboa' or localidade='Porto')eq
         
     where jogador.id_equipa=eq.id_equipa and golo.id_jogador=jogador.id_jogador
-    --and equipa.id_equipa=eq.id_equipa
-    group by equipa.nome
+    
+    group by eq.id_equipa,eq.nome,jogador.id_jogador
 ;
 select * from Vista_E;
 
 
 
+
+
+create or replace view Vista_G as -- Almost Ready I Think
+    select jogador.nome as Nome,count(golo.temp_jogo) as Golos
+    from jogador,golo,jogo
+        
+    where golo.id_jogador=jogador.id_jogador and jogo.id_jogo=golo.id_jogo and jogo.id_equipa_visitante=jogador.id_equipa
+    
+    group by jogador.id_jogador,jogador.nome
+;
+select * from Vista_G;
+
+
+
+
+create or replace view Vista_K as -- Basically Ready
+    select treinador.nome as "Nome dos Treinadores"
+    from (    select id_treinador
+        from transf_treinador
+        where transf_treinador.data_>add_months(sysdate,-24)
+    )transf,treinador
+    where treinador.id_treinador=transf.id_treinador
+;
+select * from Vista_K;
 
 
 

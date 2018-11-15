@@ -96,8 +96,16 @@ create table Equipas_Liga(
     constraint FK_Id_Liga_Equipas_Liga foreign key(Id_Liga) references Liga(Id_Liga)
 );
 
-create table transferencias(
+create table Transf_Treinador(
+    Id_Treinador number(5) not null,
+    Id_Equipa_Antiga number(5)not null,
+    Id_Equipa_Nova number(5)not null,
+    data_ Date not null,
     
+    primary key(Id_Treinador,Id_Equipa_Antiga,Id_Equipa_Nova),
+    constraint FK_Id_Treinador_Transf_T foreign key(Id_Treinador) references Treinador(Id_Treinador),
+    constraint FK_Id_Antiga_Transf_T foreign key(Id_Equipa_Antiga) references Equipa(Id_Equipa),
+    constraint FK_Id_Nova_Transf_T foreign key(Id_Equipa_Nova) references Equipa(Id_Equipa)
 );
 
 
@@ -117,3 +125,4 @@ drop table Golo ;
 drop table Treinador;
 drop table Jogador;
 drop table Equipa;
+drop table Transf_Treinador;
