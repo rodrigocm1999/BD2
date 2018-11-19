@@ -1,4 +1,10 @@
 
+create or replace view Vista_A as -- Well
+    select
+    from
+    where
+;
+select * from Vista_A;
 
 create or replace view Vista_B as -- Not Ready Super Imcomplete
     select sum(jogo.id_Jogo),equipa.nome
@@ -16,6 +22,7 @@ select * from Vista_B;
 
 
 
+
 create or replace view Vista_C as --Not Ready Rafa
     select Nome
     from jogador, sancao_disciplinar, liga
@@ -26,7 +33,6 @@ create or replace view Vista_C as --Not Ready Rafa
     divisao = 2
 ;
 select * from Vista_C;
-
 
 
 
@@ -54,7 +60,7 @@ create or replace view Vista_E as -- Almost Ready 2º Try
     select count(golo.temp_jogo) as golos,eq.nome as nome,eq.id_equipa as ID
     from golo,jogador,
         (select id_equipa,nome from equipa
-        where localidade='Lisboa' or localidade='Porto')eq
+        where localidade='Lisboa' or localidade='Porto')eq  
         
     where jogador.id_equipa=eq.id_equipa and golo.id_jogador=jogador.id_jogador
     
@@ -62,6 +68,15 @@ create or replace view Vista_E as -- Almost Ready 2º Try
 ;
 select * from Vista_E;
 
+
+
+
+create or replace view Vista_F as -- Well
+    select
+    from
+    where
+;
+select * from Vista_F;
 
 
 
@@ -79,6 +94,35 @@ select * from Vista_G;
 
 
 
+create or replace view Vista_H as -- Well
+    select
+    from
+    where
+;
+select * from Vista_H;
+
+
+
+
+create or replace view Vista_I as -- Well
+    select
+    from
+    where
+;
+select * from Vista_I;
+    
+
+
+create or replace view Vista_J as -- Well
+    select
+    from
+    where
+;
+select * from Vista_J;
+
+
+
+
 create or replace view Vista_K as -- Basically Ready
     select treinador.nome as "Nome dos Treinadores"
     from (    select id_treinador
@@ -88,6 +132,29 @@ create or replace view Vista_K as -- Basically Ready
     where treinador.id_treinador=transf.id_treinador
 ;
 select * from Vista_K;
+
+
+
+
+create or replace view Vista_L as -- Kinda Ready
+    select equipa.nome,jog.N_Golos_Casa+jog.N_Golos_Visitante as Golos_Totais
+    from equipa,(
+        select * from jogo
+        where to_char(data_,'HH24') between 17 and 23
+        and N_Golos_Casa+N_Golos_Visitante>4
+        )jog
+    where equipa.id_equipa in (jog.id_equipa_casa,jog.id_equipa_visitante)
+
+    order by equipa.nome asc,jog.N_Golos_Casa+jog.N_Golos_Visitante
+;
+select * from Vista_L;
+
+
+
+
+
+
+
 
 
 
