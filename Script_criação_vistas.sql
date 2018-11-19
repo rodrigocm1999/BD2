@@ -1,10 +1,16 @@
 
+
+
+
 create or replace view Vista_A as -- Well
     select
     from
     where
 ;
 select * from Vista_A;
+
+
+
 
 create or replace view Vista_B as -- Not Ready Super Imcomplete
     select sum(jogo.id_Jogo),equipa.nome
