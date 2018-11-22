@@ -57,14 +57,14 @@ create table Jogo(
 create table Golo(
     Id_Jogador number(5) not null,
     Id_Jogo number(5) not null,
-    Temp_Jogo date not null,
+    Temp_Jogo number(4) not null,
 
-    primary key(Id_Jogador, Id_Jogo),
+    primary key(Id_Jogador, Id_Jogo,Temp_Jogo),
     constraint FK_Id_Jogador_Golo foreign key(Id_Jogador) references Jogador(Id_Jogador),
     constraint FK_Id_Jogo_Golo foreign key(Id_Jogo) references Jogo(Id_jogo)
 );
 
-create table Classificação(
+create table Classificacao(
     Id_Classificacao number(5) not null primary key,
     Id_Liga number(5) not null,
     Id_Equipa number(5) not null,
@@ -79,13 +79,23 @@ create table Classificação(
     constraint FK_Id_Liga_Class foreign key(Id_Liga) references Liga(Id_Liga)
 );
 
-create table Sanção_Disciplinar(
+create table Sancao_Disciplinar(
     Id_Sancao number(5) not null primary key,
     Id_Jogador number(5) not null,
     Inicio date not null,
     Fim date not null,
     constraint FK_Id_Jogador_Sancao foreign key(Id_Jogador) references Jogador(Id_Jogador)
 );
+
+create table Cartao(
+    Id_Cartao number(5) not null primary key,
+    Id_Jogador number(5) not null,
+    Id_Jogo number(5) not null,
+    Cor varchar2(80) not null,
+    constraint FK_Id_Jogador_Cartao foreign key(Id_Jogador) references Jogador(Id_Jogador),
+    constraint FK_Id_Jogo_Cartao foreign key(Id_Jogo) references Jogo(Id_Jogo)
+);
+
 
 create table Equipas_Liga(
     Id_Equipa number(5) not null,
@@ -94,6 +104,15 @@ create table Equipas_Liga(
     primary key(Id_Equipa, Id_liga),
     constraint FK_Id_Equipa_Equipas_Liga foreign key(Id_Equipa) references Equipa(Id_Equipa),
     constraint FK_Id_Liga_Equipas_Liga foreign key(Id_Liga) references Liga(Id_Liga)
+);
+
+create table Jogo_Classificacao(
+    Id_Classificacao number(5) not null,
+    Id_Jogo number(5) not null,
+    
+    primary key(Id_Classificacao,Id_Jogo),
+    constraint FK_Id_Classificacao_Jogo_Class foreign key(Id_Classificacao) references Classificacao(Id_Classificacao),
+    constraint FK_Id_Jogo_Jogo_Class foreign key(Id_Jogo) references Jogo(Id_Jogo)
 );
 
 create table Transf_Treinador(
@@ -110,19 +129,24 @@ create table Transf_Treinador(
 
 
 
-
-alter table Equipa
-add Nome varchar2(80) not null;
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
-drop table Equipas_Liga;
-drop table Jogo;
-drop table Classificação;
-drop table Sanção_Disciplinar;
-drop table Liga;
-drop table Golos_Guarda_Redes;
-drop table Golo ;
-drop table Treinador;
-drop table Jogador;
-drop table Equipa;
+
 drop table Transf_Treinador;
+drop table Equipas_Liga;
+drop table Cartao;
+drop table Sancao_Disciplinar;
+drop table Classificacao cascade constraints;
+drop table Jogo_Classificacao;
+drop table Golo;
+drop table Jogo cascade constraints;
+drop table Liga cascade constraints;
+drop table Treinador;
+drop table Golos_Guarda_Redes;
+drop table Jogador;
+drop table Equipa cascade constraints;
+
+
+
+
