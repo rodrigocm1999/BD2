@@ -1,4 +1,4 @@
-    --Equipas
+--Equipas
 insert into Equipa values (1, 'dlasseter0', 'Lisboa');
 insert into Equipa values (2, 'mstrike1', 'Lisboa');
 insert into Equipa values (3, 'homara2', 'Lisboa');
@@ -21,7 +21,7 @@ insert into Equipa values (19, 'plearnedi', 'Murów');
 insert into Equipa values (20, 'tturrij', 'Tiberias');
 
 
---jogadores
+--Jogador (Id_Jogador, Id_Equipa, Nome, Idade, Posicao, Nacionalidade)
 insert into jogador values (1, 7, 'Micheil', 30, 'Extremo', 'Portugal');
 insert into jogador values (2, 8, 'Gustav', 32, 'Extremo', 'Inglaterra');
 insert into jogador values (3, 6, 'Mattie', 38, 'Extremo', 'Portugal');
@@ -115,36 +115,36 @@ insert into Golos_Guarda_Redes values (58, 7);
 insert into Golos_Guarda_Redes values (59, 9);
 insert into Golos_Guarda_Redes values (60, 20);
 
---Treinadores (ID_Treinador, ID_Equipa)
-insert into Treinador values (1, 1, 'Grover', 'Principal', 'Indonesia');
+--Treinadores (ID_Treinador, ID_Equipa, Nome, Tipo, Nacionalidade)
+insert into Treinador values (1, 1, 'Grover', 'Principal', 'Portugal');
 insert into Treinador values (2, 2, 'Gussie', 'Principal', 'China');
-insert into Treinador values (3, 3, 'Carmelina', 'Principal', 'Thailand');
+insert into Treinador values (3, 3, 'Carmelina', 'Principal', 'Portugal');
 insert into Treinador values (4, 4, 'Karlis', 'Principal', 'Brazil');
 insert into Treinador values (5, 5, 'Anson', 'Principal', 'Armenia');
-insert into Treinador values (6, 6, 'Gillan', 'Principal', 'China');
+insert into Treinador values (6, 6, 'Gillan', 'Principal', 'Portugal');
 insert into Treinador values (7, 7, 'Aristotle', 'Principal', 'Mali');
-insert into Treinador values (8, 8, 'Alvis', 'Principal', 'Poland');
+insert into Treinador values (8, 8, 'Alvis', 'Principal', 'Portugal');
 insert into Treinador values (9, 9, 'Kati', 'Principal', 'China');
-insert into Treinador values (10, 10, 'Tessie', 'Principal', 'Sweden');
+insert into Treinador values (10, 10, 'Tessie', 'Principal', 'Portugal');
 insert into Treinador values (11, 11, 'Nancey', 'Principal', 'United States');
 insert into Treinador values (12, 12, 'Mona', 'Principal', 'China');
-insert into Treinador values (13, 13, 'Ulrica', 'Principal', 'Brazil');
+insert into Treinador values (13, 13, 'Ulrica', 'Principal', 'Portugal');
 insert into Treinador values (14, 14, 'Clare', 'Principal', 'Finland');
 insert into Treinador values (15, 15, 'Omero', 'Principal', 'Albania');
-insert into Treinador values (16, 16, 'Chalmers', 'Principal', 'Peru');
+insert into Treinador values (16, 16, 'Chalmers', 'Principal', 'Portugal');
 insert into Treinador values (17, 17, 'Donni', 'Principal', 'Finland');
 insert into Treinador values (18, 18, 'Lawry', 'Principal', 'Morocco');
 insert into Treinador values (19, 19, 'Aldous', 'Principal', 'China');
 insert into Treinador values (20, 20, 'Weston', 'Principal', 'Armenia');
-insert into Treinador values (21, 1, 'Rosemonde', 'Adjunto', 'Vietnam');
+insert into Treinador values (21, 1, 'Rosemonde', 'Adjunto', 'Portugal');
 insert into Treinador values (22, 2, 'Aaren', 'Adjunto', 'Nigeria');
 insert into Treinador values (23, 3, 'Daron', 'Adjunto', 'Greece');
-insert into Treinador values (24, 4, 'Sisile', 'Adjunto', 'China');
+insert into Treinador values (24, 4, 'Sisile', 'Adjunto', 'Portugal');
 insert into Treinador values (25, 5, 'Lura', 'Adjunto', 'France');
 insert into Treinador values (26, 6, 'Adelle', 'Adjunto', 'Iran');
-insert into Treinador values (27, 7, 'Pam', 'Adjunto', 'China');
+insert into Treinador values (27, 7, 'Pam', 'Adjunto', 'Portugal');
 insert into Treinador values (28, 8, 'Simeon', 'Adjunto', 'Mexico');
-insert into Treinador values (29, 9, 'Jennilee', 'Adjunto', 'Philippines');
+insert into Treinador values (29, 9, 'Jennilee', 'Adjunto', 'Portugal');
 insert into Treinador values (30, 10, 'Jasmina', 'Adjunto', 'United Kingdom');
 insert into Treinador values (31, 11, 'Munroe', 'Adjunto', 'Brazil');
 insert into Treinador values (32, 12, 'Holly', 'Adjunto', 'Canada');
@@ -153,7 +153,7 @@ insert into Treinador values (34, 14, 'Danyelle', 'Adjunto', 'Poland');
 insert into Treinador values (35, 15, 'Robbert', 'Adjunto', 'Indonesia');
 insert into Treinador values (36, 16, 'Mendy', 'Adjunto', 'Portugal');
 insert into Treinador values (37, 17, 'Maura', 'Adjunto', 'Peru');
-insert into Treinador values (38, 18, 'Padgett', 'Adjunto', 'Dominican Republic');
+insert into Treinador values (38, 18, 'Padgett', 'Adjunto', 'Portugal');
 insert into Treinador values (39, 19, 'Hermie', 'Adjunto', 'China');
 insert into Treinador values (40, 20, 'Prue', 'Adjunto', 'Russia');
 
@@ -162,12 +162,11 @@ insert into Transf_Treinador values (2,1,2,to_date('2018/10/21','YYYY/MM-DD'));
 insert into Transf_Treinador values (10,5,10,to_date('2017/6/11','YYYY/MM-DD'));
 insert into Transf_Treinador values (20,12,20,to_date('2016/2/20', 'YYYY/MM-DD'));
 
-
 --Ligas (ID_Liga, Divisao, Epoca, Data_Inicio, Data_Fim)
 insert into Liga values (1, 2, 20132014, to_date('20/2/2013','DD/MM/YYYY'), to_date('3/8/2014','DD/MM/YYYY'));
 insert into Liga values (2, 1, 20142015, to_date('4/8/2014','DD/MM/YYYY'), to_date('21/9/2015','DD/MM/YYYY'));
 insert into Liga values (3, 1, 20152016, to_date('22/9/2015','DD/MM/YYYY'), to_date('8/10/2016','DD/MM/YYYY'));
-insert into Liga values (4, 1, 20162017, to_date('9/10/2016','DD/MM/YYYY'), to_date('26/11/2017','DD/MM/YYYY'));
+insert into Liga values (4, 2, 20162017, to_date('9/10/2016','DD/MM/YYYY'), to_date('26/11/2017','DD/MM/YYYY'));
 insert into Liga values (5, 1, 20172018, to_date('27/11/2017','DD/MM/YYYY'), to_date('12/12/2018','DD/MM/YYYY'));
 
 --Jogo (ID_Jogo, Id_Equipa_Casa, Id_Equipa_Visitante, Id_Liga, N_Golos_Casa, N_Golos_Visitante, data_)
@@ -185,16 +184,47 @@ insert into Jogo values (11, 11, 6, 4, 4, 3, to_date('2016-10-13 18:18:32', 'yyy
 insert into Jogo values (12, 12, 16, 4, 3, 1, to_date('2017-07-17 21:37:08', 'yyyy-mm-dd hh24:mi:ss'));
 insert into Jogo values (13, 13, 16, 4, 5, 5, to_date('2017-08-28 21:00:49', 'yyyy-mm-dd hh24:mi:ss'));
 insert into Jogo values (14, 14, 5, 3, 5, 2, to_date('2016-02-15 12:05:35', 'yyyy-mm-dd hh24:mi:ss'));
-insert into Jogo values (15, 15, 14, 5, 3, 5, to_date('2018-05-15 05:20:07', 'yyyy-mm-dd hh24:mi:ss'));
+insert into Jogo values (15, 15, 14, 5, 5, 3, to_date('2018-05-15 05:20:07', 'yyyy-mm-dd hh24:mi:ss'));
 insert into Jogo values (16, 16, 2, 2, 4, 4, to_date('2015-04-10 00:27:57', 'yyyy-mm-dd hh24:mi:ss'));
 insert into Jogo values (17, 17, 20, 4, 1, 1, to_date('2017-06-27 10:32:58', 'yyyy-mm-dd hh24:mi:ss'));
 insert into Jogo values (18, 18, 14, 5, 1, 5, to_date('2017-12-01 16:56:55', 'yyyy-mm-dd hh24:mi:ss'));
 insert into Jogo values (19, 19, 20, 3, 5, 3, to_date('2016-02-17 02:26:31', 'yyyy-mm-dd hh24:mi:ss'));
 insert into Jogo values (20, 20, 4, 5, 5, 2, to_date('2018-11-20 22:36:14', 'yyyy-mm-dd hh24:mi:ss'));
+insert into Jogo values (21, 5, 20, 3, 5, 3, to_date('2016-02-17 02:26:31', 'yyyy-mm-dd hh24:mi:ss'));
+insert into Jogo values (22, 20, 15, 5, 3, 5, to_date('2018-11-12 20:36:14', 'yyyy-mm-dd hh24:mi:ss'));
+insert into Jogo values (23, 20, 15, 5, 3, 5, to_date('2018-11-13 22:36:14', 'yyyy-mm-dd hh24:mi:ss'));
+insert into Jogo values (24, 20, 15, 5, 3, 5, to_date('2018-11-14 22:36:14', 'yyyy-mm-dd hh24:mi:ss'));
 
-select * from Vista_J;
+--Sanção Disciplinar (Id_Sancao, Id_Jogador, Id_Jogo, Inicio, Fim, Tipo, Id_Jogo)
+insert into Sancao_Disciplinar values(1,51,to_date('2018-11-22','YYYY-MM-DD'), null, 'Vermelho', 8);
+insert into Sancao_Disciplinar values(2,51,to_date('2018-5-12','YYYY-MM-DD'), null, 'Amarelo', 8);
+insert into Sancao_Disciplinar values(3,65,to_date('2018-5-14','YYYY-MM-DD'), null, 'Amarelo', 20);
+insert into Sancao_Disciplinar values(4,65,to_date('2018-6-12','YYYY-MM-DD'), null, 'Amarelo', 20);
+insert into Sancao_Disciplinar values(5,57,to_date('2018-11-18','YYYY-MM-DD'), null, 'Vermelho', 5);
+insert into Sancao_Disciplinar values(6,54,to_date('2018-5-12','YYYY-MM-DD'), null, 'Vermelho', 9);
 
---Golo   
+--Convocado (Id_Jogo, Id_Jogador)
+insert into Convocado values (5, 13);
+insert into Convocado values (17, 13);
+insert into Convocado values (19, 13);
+insert into Convocado values (14, 15);
+insert into Convocado values (15, 15);
+insert into Convocado values (18, 15);
+insert into Convocado values (19, 15);
+insert into Convocado values (5, 57);
+insert into Convocado values (14, 57);
+insert into Convocado values (21, 57);
+insert into Convocado values (22, 57);
+
+--Classificações (Id_Classificação, Id_Liga, Id_Equipa, N_Golos_Marcados, N_Golos_Sofridos, N_Jogos, N_Pontos, N_Jogos_Ganhos, N_Jogos_Perdidos)
+insert into classificacao values (1,5,1,3,32,5,36,1,2);
+insert into classificacao values (2,5,2,37,2,12,86,3,8);
+insert into classificacao values (3,5,3,23,14,8,2,5,5);
+insert into classificacao values (4,2,4,54,9,7,7,1,1);
+insert into classificacao values (5,4,5,12,4,6,2,4,2);
+insert into classificacao values (6,4,2,5,2,12,23,3,8);
+
+--Golo (Id_Jogo,Id_Jogador,Temp_Jogo)
 insert into Golo values (11, 5, 3638);
 insert into Golo values (14, 15, 4983);
 insert into Golo values (14, 3, 1629);
@@ -297,87 +327,6 @@ insert into Golo values (79, 19, 6563);
 insert into Golo values (8, 19, 973);
 insert into Golo values (8, 5, 5922);
 insert into Golo values (80, 11, 321);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
------------------------------------------------------------------------
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 insert into Golo values (55, 11, 4314);
 insert into Golo values (63, 14, 3838);
 insert into Golo values (30, 2, 4725);
@@ -1378,150 +1327,6 @@ insert into Golo values (23, 18, 395);
 insert into Golo values (55, 18, 4281);
 insert into Golo values (40, 3, 5416);
 insert into Golo values (71, 16, 2742);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
------------------------------------------------------
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 insert into Golo values (49, 17, 1046);
 insert into Golo values (39, 10, 639);
 insert into Golo values (13, 7, 2054);

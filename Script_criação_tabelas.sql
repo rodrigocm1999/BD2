@@ -1,3 +1,17 @@
+drop table Transf_Treinador;
+drop table Equipas_Liga;
+drop table Sancao_Disciplinar;
+drop table Classificacao cascade constraints;
+drop table Convocado;
+drop table Jogo_Classificacao;
+drop table Golo;
+drop table Jogo cascade constraints;
+drop table Liga cascade constraints;
+drop table Treinador;
+drop table Golos_Guarda_Redes;
+drop table Jogador;
+drop table Equipa cascade constraints;
+------------------------------------------------------------------------
 create table Equipa(
     Id_Equipa number(5) not null primary key,
     Nome varchar2(80) not null,
@@ -54,6 +68,15 @@ create table Jogo(
     constraint Id_Liga foreign key(Id_Liga) references Liga(Id_Liga)
 );
 
+create table Convocado(
+    Id_Jogo number(5) not null,
+    Id_Jogador number(5) not null,
+    
+    primary key(Id_Jogo,Id_Jogador),
+    constraint FK_Id_Jogo_Convocados foreign key(Id_Jogo) references Jogo(Id_Jogo),
+    constraint FK_Id_Jogador_Convocados foreign key(Id_Jogador) references Jogador(Id_Jogador)
+);
+
 create table Golo(
     Id_Jogador number(5) not null,
     Id_Jogo number(5) not null,
@@ -73,7 +96,7 @@ create table Classificacao(
     N_Jogos number(2) not null,
     N_Pontos number(2) not null,
     N_Jogos_Ganhos number(2) not null,
-    N_Jogos_Sofridos number(2) not null,
+    N_Jogos_Perdidos number(2) not null,
 
     constraint FK_Id_Equipa_Class foreign key(Id_Equipa) references Equipa(Id_Equipa),
     constraint FK_Id_Liga_Class foreign key(Id_Liga) references Liga(Id_Liga)
@@ -83,19 +106,12 @@ create table Sancao_Disciplinar(
     Id_Sancao number(5) not null primary key,
     Id_Jogador number(5) not null,
     Inicio date not null,
-    Fim date not null,
-    constraint FK_Id_Jogador_Sancao foreign key(Id_Jogador) references Jogador(Id_Jogador)
-);
-
-create table Cartao(
-    Id_Cartao number(5) not null primary key,
-    Id_Jogador number(5) not null,
+    Fim date,
+    Tipo varchar2(80) not null,
     Id_Jogo number(5) not null,
-    Cor varchar2(80) not null,
-    constraint FK_Id_Jogador_Cartao foreign key(Id_Jogador) references Jogador(Id_Jogador),
-    constraint FK_Id_Jogo_Cartao foreign key(Id_Jogo) references Jogo(Id_Jogo)
+    constraint FK_Id_Jogador_Sancao foreign key(Id_Jogador) references Jogador(Id_Jogador),
+    constraint FK_Id_Jogo_Sancao foreign key(Id_Jogo) references Jogo(Id_Jogo)
 );
-
 
 create table Equipas_Liga(
     Id_Equipa number(5) not null,
@@ -126,27 +142,3 @@ create table Transf_Treinador(
     constraint FK_Id_Antiga_Transf_T foreign key(Id_Equipa_Antiga) references Equipa(Id_Equipa),
     constraint FK_Id_Nova_Transf_T foreign key(Id_Equipa_Nova) references Equipa(Id_Equipa)
 );
-
-
-
------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
-
-
-drop table Transf_Treinador;
-drop table Equipas_Liga;
-drop table Cartao;
-drop table Sancao_Disciplinar;
-drop table Classificacao cascade constraints;
-drop table Jogo_Classificacao;
-drop table Golo;
-drop table Jogo cascade constraints;
-drop table Liga cascade constraints;
-drop table Treinador;
-drop table Golos_Guarda_Redes;
-drop table Jogador;
-drop table Equipa cascade constraints;
-
-
-
-

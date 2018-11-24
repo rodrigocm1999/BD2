@@ -23,3 +23,14 @@ and liga.epoca=epocaAtual(-1)
 and jogo.id_jogo=golo.id_jogo
 and jogo.id_liga = liga.id_liga and liga.epoca=epocaAtual(-2)
 ;*/
+
+
+/*create table Cartao(
+    Id_Cartao number(5) not null primary key,
+    Id_Jogador number(5) not null,
+    Id_Jogo number(5) not null,
+    Cor varchar2(80) not null,
+    constraint FK_Id_Jogador_Cartao foreign key(Id_Jogador) references Jogador(Id_Jogador),
+    constraint FK_Id_Jogo_Cartao foreign key(Id_Jogo) references Jogo(Id_Jogo)
+);*/
+--drop table Cartao;

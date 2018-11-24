@@ -1,31 +1,66 @@
+-- Total: A,B,C,D,E,F,G,H,I,J,K,L,M,N
+-- Feitas: A,B,D,E,G,H,J,K,L,M,N
+-- Por Fazer: C,I
 
 
 
-
-create or replace view Vista_A as -- Mehh I dunno
-    select x.nome_equipa
+create or replace view Vista_A as -- Ready
+    select i.nome_equipa as "Team Won Last Champ",
+        g.nome_equipa "Team Most Yellow Cards",
+        x.nome_equipa as "Team que sofreu mais golos"
     from (
         select nome_equipa
         from (
-                select sum(jogo.n_golos_casa) as Golos_Em_Casa,equipa.nome as nome_equipa
-                from jogo,equipa
-                where jogo.id_equipa_casa=equipa.id_equipa and to_char(jogo.data_,'YYYY-MM')>=to_char(add_months(sysdate,-1),'YYYY-MM')
-                group by equipa.id_equipa,equipa.nome
-                order by sum(jogo.n_golos_casa) )y
+            select sum(jogo.n_golos_casa) as Golos_Em_Casa,equipa.nome as nome_equipa
+            from jogo,equipa
+            where jogo.id_equipa_casa=equipa.id_equipa and to_char(jogo.data_,'YYYY-MM')>=to_char(add_months(sysdate,-1),'YYYY-MM')
+            group by equipa.id_equipa,equipa.nome
+            order by sum(jogo.n_golos_casa) 
+            )y
         where rownum<2
-        )x
+    ) x, ( 
+        select equipa.nome as nome_equipa
+        from equipa, (
+            select max(amount),id_equipa
+            from ( 
+                select count(sandis.id_sancao) as amount ,equipa.id_equipa
+                from jogo,jogador,equipa,liga,(
+                    select id_sancao,inicio,id_jogador,id_jogo
+                    from sancao_disciplinar
+                    where tipo='Amarelo'
+                    )sandis
+                where sandis.id_jogador = jogador.id_jogador and jogador.id_equipa = equipa.id_equipa
+                    and liga.id_liga = jogo.id_liga and jogo.id_jogo = sandis.id_jogo
+                    and liga.epoca = epocaAtual()
+                group by equipa.id_equipa,equipa.nome,jogador.id_jogador
+            ) l
+            group by l.id_equipa
+            )k
+        where k.id_equipa=equipa.id_equipa   
+    ) g, (
+        select equipa2.nome as nome_equipa
+        from equipa equipa2, (
+            select clas.id_equipa as id_equipa
+            from classificacao clas,liga
+            where clas.id_liga=liga.id_liga and liga.epoca=epocaAtual(-1)  
+                and clas.N_pontos = (select max(n_pontos) as maximo from classificacao clas2,liga liga2
+                                            where clas2.id_liga=liga2.id_liga and liga2.epoca=epocaAtual(-1))
+            )j
+        where j.id_equipa=equipa2.id_equipa
+    ) i
 ;
 select * from Vista_A;
 
 
 
-
-create or replace view Vista_B as -- Alittle not ready
+        
+        
+create or replace view Vista_B as --Ready
     select count(jogo.id_Jogo) as Jogos,equipa.nome
     from equipa,jogo, liga, (
         select id_treinador,id_equipa
         from treinador
-        where nacionalidade='Portuguese' )trein
+        where nacionalidade='Portugal' )trein
         
     where jogo.id_liga=liga.id_liga and liga.epoca=epocaAtual()
         and equipa.id_equipa in (jogo.id_equipa_casa,jogo.id_equipa_visitante)
@@ -91,10 +126,18 @@ select * from Vista_E;
 
 
 
-create or replace view Vista_F as -- Well
-    select
-    from
-    where
+create or replace view Vista_F as -- Ready
+    select jog.id_jogador as "Id do Jogador",jog.nome as "Nome do Jogador",sancao_disciplinar.inicio as "Inicio da Sanção",sancao_disciplinar.fim as "Fim da Sanção"
+    from (
+        select id_jogador,nome
+        from jogador
+        where posicao='Guarda Redes'
+    )jog,sancao_disciplinar
+    where jog.id_jogador=sancao_disciplinar.id_jogador
+        and sancao_disciplinar.tipo='Vermelho' and sancao_disciplinar.inicio>=add_months(sysdate,-3)
+        and (select count(convocado.id_jogador) from convocado            
+            where convocado.id_jogador=jog.id_jogador) > 3
+    order by jog.nome
 ;
 select * from Vista_F;
 
@@ -118,13 +161,17 @@ select * from Vista_G;
 
 
 
- 
-
-
-create or replace view Vista_H as -- Well Rafa
-    select
-    from
-    where
+create or replace view Vista_H as -- Ready
+    select distinct treinador.nome,treinador.id_equipa
+    from treinador,jogo jog,liga
+        
+    where treinador.id_equipa in ( jog.id_equipa_casa, jog.id_equipa_visitante)
+        and jog.id_liga=liga.id_liga and liga.epoca=epocaAtual()
+        and (select count(id_jogo) from jogo J -- derrotas
+            where (treinador.id_equipa=J.id_equipa_casa and J.n_golos_casa<J.n_golos_visitante) 
+                or (treinador.id_equipa=J.id_equipa_visitante and J.n_golos_visitante<J.n_golos_casa) 
+            ) < 2
+        and N_JGCL(treinador.id_equipa,liga.epoca) > 3
 ;
 select * from Vista_H;
 
