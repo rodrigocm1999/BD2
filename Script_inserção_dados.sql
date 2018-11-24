@@ -1,25 +1,24 @@
 --Equipas
-insert into Equipa values (1, 'dlasseter0', 'Lisboa');
-insert into Equipa values (2, 'mstrike1', 'Lisboa');
-insert into Equipa values (3, 'homara2', 'Lisboa');
-insert into Equipa values (4, 'fbednell3', 'Porto');
-insert into Equipa values (5, 'ahowler4', 'Porto');
-insert into Equipa values (6, 'tvennard5', 'Porto');
-insert into Equipa values (7, 'tchoat6', 'Coimbra');
-insert into Equipa values (8, 'jveld7', 'Coimbra');
-insert into Equipa values (9, 'tteather8', 'Coimbra');
-insert into Equipa values (10, 'dimmings9', 'Coimbra');
-insert into Equipa values (11, 'acordeuxa', 'Tapakrejo');
-insert into Equipa values (12, 'hjebbb', 'Bolboc');
-insert into Equipa values (13, 'spennigarc', 'Santa Cruz');
-insert into Equipa values (14, 'bpeopled', 'Uzdin');
-insert into Equipa values (15, 'gbouzane', 'Caqu');
-insert into Equipa values (16, 'mchottyf', 'Moravský Písek');
-insert into Equipa values (17, 'cmawsong', 'Menggala');
-insert into Equipa values (18, 'seschalotteh', 'San Miguel');
-insert into Equipa values (19, 'plearnedi', 'Murów');
-insert into Equipa values (20, 'tturrij', 'Tiberias');
-
+insert into Equipa values (1, 'dlasseter0', 'Lisboa',1);
+insert into Equipa values (2, 'mstrike1', 'Lisboa',1);
+insert into Equipa values (3, 'homara2', 'Lisboa',1);
+insert into Equipa values (4, 'fbednell3', 'Porto',1);
+insert into Equipa values (5, 'ahowler4', 'Porto',1);
+insert into Equipa values (6, 'tvennard5', 'Porto',2);
+insert into Equipa values (7, 'tchoat6', 'Coimbra',2);
+insert into Equipa values (8, 'jveld7', 'Coimbra',2);
+insert into Equipa values (9, 'tteather8', 'Coimbra',2);
+insert into Equipa values (10, 'dimmings9', 'Coimbra',1);
+insert into Equipa values (11, 'acordeuxa', 'Tapakrejo',2);
+insert into Equipa values (12, 'hjebbb', 'Bolboc',1);
+insert into Equipa values (13, 'spennigarc', 'Santa Cruz',1);
+insert into Equipa values (14, 'AAC', 'Uzdin',2);
+insert into Equipa values (15, 'gbouzane', 'Caqu',1);
+insert into Equipa values (16, 'mchottyf', 'Moravský Písek',1);
+insert into Equipa values (17, 'cmawsong', 'Menggala',2);
+insert into Equipa values (18, 'seschalotteh', 'San Miguel',1);
+insert into Equipa values (19, 'plearnedi', 'Murów',2);
+insert into Equipa values (20, 'tturrij', 'Tiberias',2);
 
 --Jogador (Id_Jogador, Id_Equipa, Nome, Idade, Posicao, Nacionalidade)
 insert into jogador values (1, 7, 'Micheil', 30, 'Extremo', 'Portugal');
@@ -193,7 +192,8 @@ insert into Jogo values (20, 20, 4, 5, 5, 2, to_date('2018-11-20 22:36:14', 'yyy
 insert into Jogo values (21, 5, 20, 3, 5, 3, to_date('2016-02-17 02:26:31', 'yyyy-mm-dd hh24:mi:ss'));
 insert into Jogo values (22, 20, 15, 5, 3, 5, to_date('2018-11-12 20:36:14', 'yyyy-mm-dd hh24:mi:ss'));
 insert into Jogo values (23, 20, 15, 5, 3, 5, to_date('2018-11-13 22:36:14', 'yyyy-mm-dd hh24:mi:ss'));
-insert into Jogo values (24, 20, 15, 5, 3, 5, to_date('2018-11-14 22:36:14', 'yyyy-mm-dd hh24:mi:ss'));
+insert into Jogo values (24, 20, 15, 5, 3, 5, to_date('2018-11-24 22:36:14', 'yyyy-mm-dd hh24:mi:ss'));
+insert into Jogo values (25, 14, 15, 5, 3, 5, to_date('2018-11-24 22:36:14', 'yyyy-mm-dd hh24:mi:ss'));
 
 --Sanção Disciplinar (Id_Sancao, Id_Jogador, Id_Jogo, Inicio, Fim, Tipo, Id_Jogo)
 insert into Sancao_Disciplinar values(1,51,to_date('2018-11-22','YYYY-MM-DD'), null, 'Vermelho', 8);
@@ -211,6 +211,8 @@ insert into Convocado values (14, 15);
 insert into Convocado values (15, 15);
 insert into Convocado values (18, 15);
 insert into Convocado values (19, 15);
+insert into Convocado values (25, 15);
+insert into Convocado values (24, 15);
 insert into Convocado values (5, 57);
 insert into Convocado values (14, 57);
 insert into Convocado values (21, 57);

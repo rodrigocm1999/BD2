@@ -15,7 +15,8 @@ drop table Equipa cascade constraints;
 create table Equipa(
     Id_Equipa number(5) not null primary key,
     Nome varchar2(80) not null,
-    Localidade varchar2(80) not null
+    Localidade varchar2(80) not null,
+    Divisao number(1) not null check(Divisao = 1 or Divisao = 2)
 );
 
 create table Jogador(

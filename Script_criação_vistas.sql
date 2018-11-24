@@ -1,10 +1,12 @@
--- Total: A,B,C,D,E,F,G,H,I,J,K,L,M,N
--- Feitas: A,B,D,E,G,H,J,K,L,M,N
--- Por Fazer: C,I
+-- Total:   A,B,C,D,E,F,G,H,I,J,K,L,M,N
+-- Feitas:  A,B,C,D,E,F,G,H,I,J,K,L,M,N
+-- Por Fazer: 
+-- Não Completamente Corretas: A,C
 
 
 
-create or replace view Vista_A as -- Ready
+
+create or replace view Vista_A as -- Ready But Lacks One Thing the Most Yellow Cards Dont Include Coaches
     select i.nome_equipa as "Team Won Last Champ",
         g.nome_equipa "Team Most Yellow Cards",
         x.nome_equipa as "Team que sofreu mais golos"
@@ -73,14 +75,14 @@ select * from Vista_B;
 
 
 
-create or replace view Vista_C as --Not Ready Rafa
-    select Nome
-    from jogador, sancao_disciplinar, liga
-    where jogadores.nacionalidade = 'Portuguesa' and
-    count(sancao_disciplinar.ID_jogador = jogadores.Id_jogador) <= 0 and
-    equipa.ID_JOgador = jogador.Id_jogador and
-    liga.id_equipa = equipa.id_equipa and
-    divisao = 2
+create or replace view Vista_C as --Kinda Ready  Lacks Testing
+    select jog.nome
+    from (
+        select * from jogador
+        where nacionalidade='Portugal'  -- Apenas os jogadores que originam de portugal
+        ) jog, equipa
+    where jog.id_equipa=equipa.id_equipa and equipa.divisao=2
+        and (select count(id_sancao) from sancao_disciplinar where id_jogador=jog.id_jogador) = 0 -- Nº de Sanções
 ;
 select * from Vista_C;
 
@@ -178,22 +180,29 @@ select * from Vista_H;
 
 
 
-create or replace view Vista_I as -- Well Rafa
-    select
-    from
-    where
+create or replace view Vista_I as -- Ready
+    select jogador.nome,jogador.id_jogador,jogo.data_
+    from (
+        select * from equipa
+        where equipa.nome='AAC'
+        )eq ,jogo,convocado,jogador
+    where eq.id_equipa in (jogo.id_equipa_casa,jogo.id_equipa_visitante)
+        and convocado.id_jogo=jogo.id_jogo and next_day(jogo.data_,'DOMINGO')-8 > next_day(sysdate,'DOMINGO')-24
+        and jogador.id_jogador=convocado.id_jogador
+    order by jogo.data_
 ;
 select * from Vista_I;
-    
+
+
 
 
 create or replace view Vista_J as -- Ready
     select equipa.id_equipa as "ID da Equipa",equipa.nome as "Nome da Equipa",equipa.localidade as "Local",treinador.nome as "Nome do Treinador"
-        ,jog.N_casa as "Golos da Casa",jog.N_visitante as "Golos da Visitante"
+        ,jog.N_casa as "Golos da Casa",jog.N_visitante as "Golos da Visitante",jog.id_jogo as "Id do Jogo"
     from (
-        select jogo.N_golos_casa as N_casa, jogo.N_golos_Visitante as N_visitante, jogo.id_equipa_casa as id_equipa_casa
+        select jogo.N_golos_casa as N_casa, jogo.N_golos_Visitante as N_visitante, jogo.id_equipa_casa as id_equipa_casa, jogo.id_jogo as id_jogo
         from jogo,liga
-        where liga.id_liga=jogo.id_liga and next_day(jogo.data_,'DOMINGO')-8 > next_day(sysdate,'DOMINGO')-48
+        where liga.id_liga=jogo.id_liga and next_day(jogo.data_,'DOMINGO')-8 > next_day(sysdate,'DOMINGO')-16
         )jog, equipa,  treinador
         
     where equipa.id_equipa in (jog.id_equipa_casa)

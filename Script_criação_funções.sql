@@ -22,7 +22,8 @@ create or replace function N_JGCL (idEquipa number, Epoca number) return number 
         select id_jogo,id_equipa_casa,n_golos_casa,id_equipa_visitante,n_golos_visitante
         from jogo,liga
         where equipa in (jogo.id_equipa_casa,jogo.id_equipa_visitante)
-            and jogo.id_liga=liga.id_liga and liga.epoca=epoc;
+            and jogo.id_liga=liga.id_liga and liga.epoca=epoc
+        order by jogo.data_;
     
 Begin   
     for item in cur(idEquipa,Epoca) loop
