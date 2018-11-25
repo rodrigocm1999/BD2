@@ -143,3 +143,12 @@ create table Transf_Treinador(
     constraint FK_Id_Antiga_Transf_T foreign key(Id_Equipa_Antiga) references Equipa(Id_Equipa),
     constraint FK_Id_Nova_Transf_T foreign key(Id_Equipa_Nova) references Equipa(Id_Equipa)
 );
+
+create table Melhores_Piores_Equipas(
+    1_melhor number(5) not null,
+    2_melhor number(5) not null,
+    3_melhor number(5) not null,
+    1_pior number(5) not null,
+    2_pior number(5) not null,
+    3_pior number(5) not null
+);
