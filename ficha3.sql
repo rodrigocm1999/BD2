@@ -45,7 +45,12 @@ create table Erros(
 );
 drop table Erros;
 /
-
+--ex4
+SET SERVEROUTPUT ON
+Declare
+Begin
+End;
+/
 
 
 

@@ -57,6 +57,7 @@ Begin
     return amount;
 End;
 /
+select numero_golos('Extremo') from dual;
 create or replace function numero_amarelos(jog_nome varchar2,dataInicio date,dataFim date) return number as
     id_jog number;
     eq_jog number;
@@ -112,12 +113,23 @@ Begin
 
 End;
 /
-create or replace function idade(idade number, dataInicio date, dataFim date) return number as
-
+create or replace function idade(idade_ number, dataInicio date, dataFim date) return number as -- Incompleto falta excluir  jogadores a menos de duas epocas no clube
+    total number;
 Begin
-
+    select sum(x.count_) into total
+    from (select count(golo.id_jogo) as count_
+        from jogador,golo,jogo,liga
+        where jogador.idade=idade_ and golo.id_jogador=jogador.id_jogador and jogo.id_jogo=golo.id_jogo
+            and jogo.data_ between dataInicio and dataFim
+            and liga.id_liga=jogo.id_liga and liga.epoca=epocaAtual()
+        group by jogador.id_jogador) x;
+    return total;
 End;
 /
+
+
+
+
 create or replace function tempo_medio_venda(idEquipa number) return number as
 
 Begin
@@ -130,6 +142,5 @@ Begin
 
 End;
 /
-
 
 

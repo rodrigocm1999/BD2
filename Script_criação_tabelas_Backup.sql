@@ -1,6 +1,4 @@
-drop view Jogador cascade constraints;
-drop view Treinador cascade constraints;
-drop table Transferencias cascade constraints;
+drop table Transf_Treinador cascade constraints;
 drop table Melhores_Goleadores cascade constraints;
 drop table Melhores_Piores_Equipas cascade constraints;
 drop table Equipas_Liga cascade constraints;
@@ -11,8 +9,9 @@ drop table Jogo_Classificacao cascade constraints;
 drop table Golo cascade constraints;
 drop table Jogo cascade constraints;
 drop table Liga cascade constraints;
-drop table Pessoa cascade constraints;
+drop table Treinador cascade constraints;
 drop table Golos_Guarda_Redes cascade constraints;
+drop table Jogador cascade constraints;
 drop table Equipa cascade constraints;
 
 ------------------------------------------------------------------------
@@ -24,34 +23,32 @@ create table Equipa(
     Nacionalidade varchar(80) not null
 );
 
-create table Pessoa(
-    Id_Pessoa number(5) not null primary key,
+create table Jogador(
+    Id_Jogador number(5) not null primary key,
     Id_Equipa number(5) not null,
     Nome varchar2(80) not null,
-    Idade number(2) not nulL check(Idade>18 and Idade<100),
+    Idade number(2) not null,
     Posicao varchar2(80) not null,
     Nacionalidade varchar2(80) not null,
-    Tipo varchar2(80) not null check ( Tipo='Jogador' or Tipo='Treinaodor' ),
-    
-    constraint FK_Id_Equipa_Pessoa foreign key(Id_Equipa) references Equipa(Id_Equipa)
+
+    constraint FK_Id_Equipa foreign Key(Id_Equipa) references Equipa(Id_Equipa)
 );
 
-create view Jogador as 
-    select Id_Pessoa as Id_Jogador,Id_Equipa,Nome,Idade,Posicao,Nacionalidade
-    from Pessoa
-    where Tipo='Jogador';
-
-create view Treinador as
-    select Id_Pessoa as Id_Treinador,Id_Equipa,Nome,Idade,Posicao,Nacionalidade
-    from Pessoa
-    where Tipo='Treinador';
-
+create table Treinador(
+    Id_Treinador number(5) not null primary key,
+    Id_Equipa number(5) not null,
+    Nome varchar2(80) not null,
+    Tipo varchar2(80) not null,    
+    Nacionalidade varchar2(80) not null,
+    
+    constraint FK_Id_Equipa_Treinar foreign key(Id_Equipa) references Equipa(Id_Equipa)
+);
 
 create table Golos_Guarda_Redes(
     Id_Jogador number(5) not null,
     N_golos_sofridos number(3) not null,
 
-    constraint FK_Id_Jogador_Guarda_Redes foreign key(Id_Jogador) references Pessoa(Id_Pessoa)
+    constraint FK_Id_Jogador_Guarda_Redes foreign key(Id_Jogador) references Jogador(Id_Jogador)
 );
 
 create table Liga(
@@ -82,7 +79,7 @@ create table Convocado(
     
     primary key(Id_Jogo,Id_Jogador),
     constraint FK_Id_Jogo_Convocados foreign key(Id_Jogo) references Jogo(Id_Jogo),
-    constraint FK_Id_Jogador_Convocados foreign key(Id_Jogador) references Pessoa(Id_Pessoa)
+    constraint FK_Id_Jogador_Convocados foreign key(Id_Jogador) references Jogador(Id_Jogador)
 );
 
 create table Golo(
@@ -91,7 +88,7 @@ create table Golo(
     Temp_Jogo number(4) not null,
 
     primary key(Id_Jogador, Id_Jogo,Temp_Jogo),
-    constraint FK_Id_Jogador_Golo foreign key(Id_Jogador) references Pessoa(Id_Pessoa),
+    constraint FK_Id_Jogador_Golo foreign key(Id_Jogador) references Jogador(Id_Jogador),
     constraint FK_Id_Jogo_Golo foreign key(Id_Jogo) references Jogo(Id_jogo)
 );
 
@@ -112,13 +109,12 @@ create table Classificacao(
 
 create table Sancao_Disciplinar(
     Id_Sancao number(5) not null primary key,
-    Id_Pessoa number(5) not null,
-    Id_Jogo number(5) not null,
+    Id_Jogador number(5) not null,
     Inicio date not null,
     Fim date,
     Tipo varchar2(80) not null,
-    
-    constraint FK_Id_Jogador_Sancao foreign key(Id_Pessoa) references Pessoa(Id_Pessoa),
+    Id_Jogo number(5) not null,
+    constraint FK_Id_Jogador_Sancao foreign key(Id_Jogador) references Jogador(Id_Jogador),
     constraint FK_Id_Jogo_Sancao foreign key(Id_Jogo) references Jogo(Id_Jogo)
 );
 
@@ -140,14 +136,14 @@ create table Jogo_Classificacao(
     constraint FK_Id_Jogo_Jogo_Class foreign key(Id_Jogo) references Jogo(Id_Jogo)
 );
 
-create table Transferencias(
-    Id_Pessoa number(5) not null,
+create table Transf_Treinador(
+    Id_Treinador number(5) not null,
     Id_Equipa_Antiga number(5)not null,
     Id_Equipa_Nova number(5)not null,
     data_ Date not null,
     
-    primary key(Id_Pessoa,Id_Equipa_Antiga,Id_Equipa_Nova),
-    constraint FK_Id_Treinador_Transf_T foreign key(Id_Pessoa) references Pessoa(Id_Pessoa),
+    primary key(Id_Treinador,Id_Equipa_Antiga,Id_Equipa_Nova),
+    constraint FK_Id_Treinador_Transf_T foreign key(Id_Treinador) references Treinador(Id_Treinador),
     constraint FK_Id_Antiga_Transf_T foreign key(Id_Equipa_Antiga) references Equipa(Id_Equipa),
     constraint FK_Id_Nova_Transf_T foreign key(Id_Equipa_Nova) references Equipa(Id_Equipa)
 );
@@ -173,5 +169,5 @@ create table Melhores_Goleadores(
     Lugar number(2) primary key,
     ID_Jogador number(5) not null,
     
-    constraint FK_ID_Jogador_Melhores_Gols foreign key(Id_Jogador) references Pessoa(Id_Pessoa)
+    constraint FK_ID_Jogador_Melhores_Gols foreign key(id_jogador) references jogador(id_jogador)
 );
