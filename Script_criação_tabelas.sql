@@ -31,7 +31,7 @@ create table Pessoa(
     Idade number(2) not nulL check(Idade>18 and Idade<100),
     Posicao varchar2(80) not null,
     Nacionalidade varchar2(80) not null,
-    Tipo varchar2(80) not null check ( Tipo='Jogador' or Tipo='Treinaodor' ),
+    Tipo varchar2(80) not null check ( Tipo='Jogador' or Tipo='Treinador' ),
     
     constraint FK_Id_Equipa_Pessoa foreign key(Id_Equipa) references Equipa(Id_Equipa)
 );

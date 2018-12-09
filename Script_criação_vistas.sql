@@ -27,11 +27,11 @@ create or replace view Vista_A as -- Ready But Lacks One Thing the Most Yellow C
             from ( 
                 select count(sandis.id_sancao) as amount ,equipa.id_equipa
                 from jogo,jogador,equipa,liga,(
-                    select id_sancao,inicio,id_jogador,id_jogo
+                    select id_sancao,inicio,id_pessoa,id_jogo
                     from sancao_disciplinar
                     where tipo='Amarelo'
                     )sandis
-                where sandis.id_jogador = jogador.id_jogador and jogador.id_equipa = equipa.id_equipa
+                where sandis.id_pessoa = jogador.id_jogador and jogador.id_equipa = equipa.id_equipa
                     and liga.id_liga = jogo.id_liga and jogo.id_jogo = sandis.id_jogo
                     and liga.epoca = epocaAtual()
                 group by equipa.id_equipa,equipa.nome,jogador.id_jogador
@@ -135,7 +135,7 @@ create or replace view Vista_F as -- Ready
         from jogador
         where posicao='Guarda Redes'
     )jog,sancao_disciplinar
-    where jog.id_jogador=sancao_disciplinar.id_jogador
+    where jog.id_jogador=sancao_disciplinar.id_pessoa
         and sancao_disciplinar.tipo='Vermelho' and sancao_disciplinar.inicio>=add_months(sysdate,-3)
         and (select count(convocado.id_jogador) from convocado            
             where convocado.id_jogador=jog.id_jogador) > 3
@@ -187,7 +187,7 @@ create or replace view Vista_I as -- Ready
         where equipa.nome='AAC'
         )eq ,jogo,convocado,jogador
     where eq.id_equipa in (jogo.id_equipa_casa,jogo.id_equipa_visitante)
-        and convocado.id_jogo=jogo.id_jogo and next_day(jogo.data_,'DOMINGO')-8 > next_day(sysdate,'DOMINGO')-24
+        and convocado.id_jogo=jogo.id_jogo and next_day(jogo.data_,'DOMINGO')-8 > next_day(sysdate,'DOMINGO')-24 -- Mudar o intervalo de tempo para aparecerem resultados
         and jogador.id_jogador=convocado.id_jogador
     order by jogo.data_
 ;
@@ -202,11 +202,11 @@ create or replace view Vista_J as -- Ready
     from (
         select jogo.N_golos_casa as N_casa, jogo.N_golos_Visitante as N_visitante, jogo.id_equipa_casa as id_equipa_casa, jogo.id_jogo as id_jogo
         from jogo,liga
-        where liga.id_liga=jogo.id_liga and next_day(jogo.data_,'DOMINGO')-8 > next_day(sysdate,'DOMINGO')-16
+        where liga.id_liga=jogo.id_liga and next_day(jogo.data_,'DOMINGO')-8 > next_day(sysdate,'DOMINGO')-16 -- Mudar o intervalo de tempo para aparecerem resultados
         )jog, equipa,  treinador
         
     where equipa.id_equipa in (jog.id_equipa_casa)
-        and treinador.id_equipa = equipa.id_equipa and treinador.tipo='Principal'
+        and treinador.id_equipa = equipa.id_equipa and treinador.posicao='Principal'
     order by equipa.nome desc,equipa.localidade,treinador.nome
 ;
 select * from Vista_J;
@@ -215,11 +215,11 @@ select * from Vista_J;
 
 create or replace view Vista_K as -- Ready
     select treinador.nome as "Nome dos Treinadores", transf.data_
-    from (    select id_treinador,data_
-        from transf_treinador
-        where transf_treinador.data_>add_months(sysdate,-24)
+    from (    select id_pessoa,data_
+        from transferencias
+        where transferencias.data_>add_months(sysdate,-24)
     )transf,treinador
-    where treinador.id_treinador=transf.id_treinador
+    where treinador.id_treinador=transf.id_pessoa
 ;
 select * from Vista_K;
 

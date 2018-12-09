@@ -1,17 +1,17 @@
 --Triggers importantes para o funcionamento
-create or replace procedure jogador_equipa_check(id_jogo in number,id_jogador in number) as
+create or replace procedure jogador_equipa_check(id_jogo in number,id_pessoa in number) as
     equipa_A number;
     equipa_B number;
-    equipa_jog number;
+    equipa_pessoa number;
 begin
     select id_equipa_casa,id_equipa_visitante into equipa_A,equipa_B
         from jogo
         where id_jogo=jogador_equipa_check.id_jogo;
-    select id_equipa into equipa_jog
-        from jogador
-        where id_jogador=jogador_equipa_check.id_jogador;
-    if equipa_jog!=equipa_A and equipa_jog!=equipa_B then
-           RAISE_APPLICATION_ERROR (-20001,'Jogador nao faz parte de nenhuma das equipas do jogo'); 
+    select id_equipa into equipa_pessoa
+        from pessoa
+        where id_pessoa=jogador_equipa_check.id_pessoa;
+    if equipa_pessoa!=equipa_A and equipa_pessoa!=equipa_B then
+           RAISE_APPLICATION_ERROR (-20001,'Esta Pessoa nao faz parte de nenhuma das equipas do jogo'); 
     end if;
 end;
 /
@@ -24,7 +24,7 @@ end;
 create or replace trigger jogo_jogador_sancao
     before insert on Sancao_Disciplinar for each row   
 begin
-    jogador_equipa_check(:new.id_jogo,:new.id_jogador);
+    jogador_equipa_check(:new.id_jogo,:new.id_pessoa);
 end;
 /
 --Triggers pedidos para o trabalho
@@ -65,11 +65,11 @@ begin
     end if;
 end;
 /
-create or replace function vermelhos_jogador(id_jog number) return date as
+create or replace function vermelhos_jogador(id_pes number) return date as
     dat date;
 Begin
     select max(fim) into dat from sancao_disciplinar sandis 
-        where tipo like 'Vermelho' and id_jogador=id_jog and fim!=null;
+        where tipo like 'Vermelho' and id_pessoa=id_pes and fim!=null;
     
     if dat = null then
         return to_date('0000','YYYY');
@@ -82,15 +82,15 @@ create or replace trigger max_cartoes
 declare
     quant number;
 begin
-    select count(id_jogador) into quant
+    select count(id_pessoa) into quant
         from sancao_disciplinar
-        where tipo like 'Amarelo' and id_jogador= :new.id_jogador
-            and inicio>vermelhos_jogador(:new.id_jogador)
+        where tipo like 'Amarelo' and id_pessoa= :new.id_pessoa      
+            and inicio>vermelhos_jogador(:new.id_pessoa)
         group by id_jogador;
         
     if quant = 2 then
         insert into sancao_disciplinar values ((select max(id_sancao)+1  from sancao_disciplinar)
-                                                ,:new.id_jogador,sysdate,null,'Vermelho',:new.id_jogo);
+                                                ,:new.id_pessoa,sysdate,null,'Vermelho',:new.id_jogo);
     end if;
 end;
 /

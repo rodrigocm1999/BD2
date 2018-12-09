@@ -66,7 +66,7 @@ create or replace function numero_amarelos(jog_nome varchar2,dataInicio date,dat
     cursor cur(jogo_id number) is
         select sandis.id_jogo as id_jogo
         from sancao_disciplinar sandis
-        where sandis.id_jogador=jogo_id and tipo='Amarelo'
+        where sandis.id_pessoa=jogo_id and tipo='Amarelo'
             and jogo_id=sandis.id_jogo;
 Begin
     select id_jogador,id_equipa into id_jog,eq_jog

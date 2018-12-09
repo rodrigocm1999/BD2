@@ -1,3 +1,4 @@
+
 --Equipas
 insert into Equipa values (1, 'dlasseter0', 'Lisboa',1,'Portugal');
 insert into Equipa values (2, 'mstrike1', 'Lisboa',1,'Portugal');
@@ -196,12 +197,12 @@ insert into Jogo values (24, 20, 15, 5, 3, 5, to_date('2018-11-24 22:36:14', 'yy
 insert into Jogo values (25, 14, 15, 5, 3, 5, to_date('2018-11-24 22:36:14', 'yyyy-mm-dd hh24:mi:ss'));
 
 --Sanção Disciplinar (Id_Sancao, Id_Jogador, Id_Jogo, Inicio, Fim, Tipo, Id_Jogo)
-insert into Sancao_Disciplinar values(1,51,to_date('2018-11-22','YYYY-MM-DD'), null, 'Vermelho', 8);
-insert into Sancao_Disciplinar values(2,51,to_date('2018-5-12','YYYY-MM-DD'), null, 'Amarelo', 8);
-insert into Sancao_Disciplinar values(3,65,to_date('2018-5-14','YYYY-MM-DD'), null, 'Amarelo', 20);
-insert into Sancao_Disciplinar values(4,65,to_date('2018-6-12','YYYY-MM-DD'), null, 'Amarelo', 20);
-insert into Sancao_Disciplinar values(5,57,to_date('2018-11-18','YYYY-MM-DD'), null, 'Vermelho', 5);
-insert into Sancao_Disciplinar values(6,54,to_date('2018-5-12','YYYY-MM-DD'), null, 'Vermelho', 9);
+insert into Sancao_Disciplinar values(1,51,8,to_date('2018-11-22','YYYY-MM-DD'), null, 'Vermelho');
+insert into Sancao_Disciplinar values(2,51,8,to_date('2018-5-12','YYYY-MM-DD'), null, 'Amarelo');
+insert into Sancao_Disciplinar values(3,65,20,to_date('2018-5-14','YYYY-MM-DD'), null, 'Amarelo');
+insert into Sancao_Disciplinar values(4,65,20,to_date('2018-6-12','YYYY-MM-DD'), null, 'Amarelo');
+insert into Sancao_Disciplinar values(5,57,5,to_date('2018-11-18','YYYY-MM-DD'), null, 'Vermelho');
+insert into Sancao_Disciplinar values(6,54,9,to_date('2018-5-12','YYYY-MM-DD'), null, 'Vermelho');
 
 --Convocado (Id_Jogo, Id_Jogador)
 insert into Convocado values (5, 13);
@@ -243,97 +244,17 @@ insert into Golo values (15, 18, 5236);
 insert into Golo values (36, 17, 2639);
 insert into Golo values (12, 11, 257);
 insert into Golo values (17, 4, 5408);
-
-insert into Golo values (29, 7, 3418);
-insert into Golo values (24, 20, 6528);
-insert into Golo values (76, 6, 1465);
-insert into Golo values (34, 4, 5894);
-insert into Golo values (19, 5, 6464);
-insert into Golo values (2, 13, 4411);
-insert into Golo values (67, 14, 688);
 insert into Golo values (25, 10, 5381);
-insert into Golo values (68, 4, 3277);
-insert into Golo values (37, 18, 4880);
-insert into Golo values (80, 2, 6840);
-insert into Golo values (17, 18, 3025);
-insert into Golo values (56, 15, 2894);
-insert into Golo values (45, 15, 1035);
-insert into Golo values (75, 3, 3723);
-insert into Golo values (47, 2, 5593);
-insert into Golo values (55, 11, 1474);
-insert into Golo values (20, 11, 5785);
 insert into Golo values (32, 19, 4347);
-insert into Golo values (40, 1, 1855);
-insert into Golo values (53, 17, 2121);
-insert into Golo values (69, 16, 1808);
-insert into Golo values (59, 2, 962);
-insert into Golo values (7, 16, 3881);
-insert into Golo values (78, 19, 1425);
-insert into Golo values (58, 6, 6497);
-insert into Golo values (30, 6, 4077);
-insert into Golo values (53, 2, 5199);
-insert into Golo values (34, 2, 3633);
-insert into Golo values (54, 20, 5778);
-insert into Golo values (72, 7, 3573);
 insert into Golo values (48, 1, 3024);
-insert into Golo values (1, 15, 5674);
-insert into Golo values (64, 7, 1931);
 insert into Golo values (45, 4, 6942);
-insert into Golo values (69, 4, 3573);
-insert into Golo values (73, 6, 336);
-insert into Golo values (28, 11, 6411);
-insert into Golo values (76, 15, 1086);
-insert into Golo values (5, 6, 5303);
-insert into Golo values (79, 7, 2590);
-insert into Golo values (72, 20, 6358);
-insert into Golo values (69, 8, 1163);
-insert into Golo values (32, 15, 3833);
-insert into Golo values (79, 20, 4224);
-insert into Golo values (20, 7, 1143);
-insert into Golo values (13, 9, 2306);
-insert into Golo values (47, 4, 3527);
-insert into Golo values (7, 14, 456);
-insert into Golo values (34, 10, 568);
-insert into Golo values (24, 1, 2083);
-insert into Golo values (53, 2, 6205);
-insert into Golo values (29, 18, 434);
-insert into Golo values (77, 7, 5051);
-insert into Golo values (20, 16, 3696);
-insert into Golo values (41, 13, 4060);
-insert into Golo values (49, 8, 3931);
-insert into Golo values (57, 7, 1092);
-insert into Golo values (54, 19, 6023);
-insert into Golo values (64, 15, 5965);
-insert into Golo values (4, 2, 6819);
-insert into Golo values (73, 19, 4763);
-insert into Golo values (16, 3, 6789);
-insert into Golo values (74, 19, 2767);
-insert into Golo values (23, 14, 5163);
-insert into Golo values (28, 16, 2911);
-insert into Golo values (34, 16, 5612);
-insert into Golo values (25, 15, 5221);
-insert into Golo values (69, 18, 5724);
-insert into Golo values (7, 7, 742);
-insert into Golo values (21, 4, 4180);
-insert into Golo values (53, 10, 3880);
-insert into Golo values (31, 5, 1687);
-insert into Golo values (68, 20, 2547);
 insert into Golo values (16, 19, 428);
-insert into Golo values (78, 8, 1064);
-insert into Golo values (73, 13, 6029);
-insert into Golo values (68, 11, 2071);
 insert into Golo values (77, 8, 3527);
-insert into Golo values (63, 17, 3842);
-insert into Golo values (17, 12, 1682);
-insert into Golo values (22, 8, 4369);
-insert into Golo values (42, 6, 6223);
-insert into Golo values (65, 8, 5095);
-insert into Golo values (55, 2, 4591);
-insert into Golo values (29, 9, 1745);
-insert into Golo values (18, 11, 5786);
-insert into Golo values (31, 20, 1588);
-insert into Golo values (64, 8, 3646);
-insert into Golo values (33, 5, 4747);
+
+
+
+
+
 insert into Golo values (10, 3, 3565);
 insert into Golo values (50, 16, 5839);
 insert into Golo values (22, 12, 6687);
@@ -2150,7 +2071,6 @@ insert into Golo values (80, 17, 431);
 insert into Golo values (28, 12, 657);
 insert into Golo values (27, 15, 4850);
 insert into Golo values (2, 10, 6197);
-insert into Golo values (58, 18, 4541);
 insert into Golo values (14, 3, 1839);
 insert into Golo values (32, 1, 4316);
 insert into Golo values (78, 6, 1147);
@@ -2161,5 +2081,3 @@ insert into Golo values (65, 17, 6122);
 insert into Golo values (78, 18, 6445);
 insert into Golo values (9, 6, 2036);
 insert into Golo values (15, 18, 6847);
-
-
