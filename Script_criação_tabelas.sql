@@ -1,5 +1,7 @@
 drop view Jogador cascade constraints;
 drop view Treinador cascade constraints;
+drop table Avisos cascade constraints;
+drop table Cartoes cascade constraints;
 drop table Transferencias cascade constraints;
 drop table Melhores_Goleadores cascade constraints;
 drop table Melhores_Piores_Equipas cascade constraints;
@@ -116,10 +118,17 @@ create table Sancao_Disciplinar(
     Id_Jogo number(5) not null,
     Inicio date not null,
     Fim date,
-    Tipo varchar2(80) not null,
     
     constraint FK_Id_Jogador_Sancao foreign key(Id_Pessoa) references Pessoa(Id_Pessoa),
     constraint FK_Id_Jogo_Sancao foreign key(Id_Jogo) references Jogo(Id_Jogo)
+);
+create table Cartoes(
+    Id_Cartao number(5) not null primary key,
+    Id_Pessoa number(5) not null,
+    Id_Jogo number(5) not null,
+    Temp_Jogo number(4) not null,
+
+    constraint FK_Id_Pessoa_Cartoes foreign key(Id_Pessoa) references Pessoa(Id_Pessoa)
 );
 
 create table Equipas_Liga(
@@ -174,4 +183,8 @@ create table Melhores_Goleadores(
     ID_Jogador number(5) not null,
     
     constraint FK_ID_Jogador_Melhores_Gols foreign key(Id_Jogador) references Pessoa(Id_Pessoa)
+);
+
+create table Avisos(
+    IdAviso number(5) primary key
 );

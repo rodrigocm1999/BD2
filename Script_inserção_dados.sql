@@ -1,5 +1,6 @@
 
 --Equipas
+Begin
 insert into Equipa values (1, 'dlasseter0', 'Lisboa',1,'Portugal');
 insert into Equipa values (2, 'mstrike1', 'Lisboa',1,'Portugal');
 insert into Equipa values (3, 'homara2', 'Lisboa',1,'Portugal');
@@ -20,8 +21,10 @@ insert into Equipa values (17, 'cmawsong', 'Menggala',2,'Inglaterra');
 insert into Equipa values (18, 'seschalotteh', 'San Miguel',1,'França');
 insert into Equipa values (19, 'plearnedi', 'Murów',2,'Inglaterra');
 insert into Equipa values (20, 'tturrij', 'Tiberias',2,'Inglaterra');
-
+End;
+/
 --Jogador (Id_Jogador, Id_Equipa, Nome, Idade, Posicao, Nacionalidade)
+Begin
 insert into Pessoa values (1, 7, 'Micheil', 30, 'Extremo', 'Portugal', 'Jogador');
 insert into Pessoa values (2, 8, 'Gustav', 32, 'Extremo', 'Inglaterra', 'Jogador');
 insert into Pessoa values (3, 6, 'Mattie', 38, 'Extremo', 'Portugal', 'Jogador');
@@ -102,8 +105,10 @@ insert into Pessoa values (77, 8, 'Rudie', 22,'Extremo', 'Portugal', 'Jogador');
 insert into Pessoa values (78, 18, 'Bendick', 34,'Extremo', 'Inglaterra', 'Jogador');
 insert into Pessoa values (79, 2, 'Filbert', 29,'Extremo', 'Portugal', 'Jogador');
 insert into Pessoa values (80, 14, 'Miles', 26,'Extremo', 'França', 'Jogador');
-    
+End;
+/
 --Treinadores (ID_Treinador, ID_Equipa, Nome, Tipo, Nacionalidade)
+Begin
 insert into Pessoa values (81, 1, 'Grover', 32, 'Principal', 'Portugal', 'Treinador');
 insert into Pessoa values (82, 2, 'Gussie', 44,'Principal', 'China', 'Treinador');
 insert into Pessoa values (83, 3, 'Carmelina', 26,'Principal', 'Portugal', 'Treinador');
@@ -144,8 +149,10 @@ insert into Pessoa values (117, 17, 'Maura', 33,'Adjunto', 'Peru', 'Treinador');
 insert into Pessoa values (118, 18, 'Padgett', 63,'Adjunto', 'Portugal', 'Treinador');
 insert into Pessoa values (119, 19, 'Hermie', 85,'Adjunto', 'China', 'Treinador');
 insert into Pessoa values (120, 20, 'Prue', 19,'Adjunto', 'Russia', 'Treinador');
-
+End;
+/
 --golos sofridos por guarda redes
+Begin
 insert into Golos_Guarda_Redes values (51, 16);
 insert into Golos_Guarda_Redes values (52, 7);
 insert into Golos_Guarda_Redes values (53, 10);
@@ -156,20 +163,26 @@ insert into Golos_Guarda_Redes values (57, 8);
 insert into Golos_Guarda_Redes values (58, 7);
 insert into Golos_Guarda_Redes values (59, 9);
 insert into Golos_Guarda_Redes values (60, 20);
-
+End;
+/
 --Transf_Treinadores (Id_Treinador, Id_Equipa_Antiga, Id_Equipa_Nova, data_ Date not null)
+Begin
 insert into Transferencias values (82,1,2,to_date('2018/10/21','YYYY/MM-DD'));
 insert into Transferencias values (90,5,10,to_date('2017/6/11','YYYY/MM-DD'));
 insert into Transferencias values (100,12,20,to_date('2016/2/20', 'YYYY/MM-DD'));
-
+End;
+/
 --Ligas (ID_Liga, Divisao, Epoca, Data_Inicio, Data_Fim)
+Begin
 insert into Liga values (1, 2, 20132014, to_date('20/2/2013','DD/MM/YYYY'), to_date('3/8/2014','DD/MM/YYYY'));
 insert into Liga values (2, 1, 20142015, to_date('4/8/2014','DD/MM/YYYY'), to_date('21/9/2015','DD/MM/YYYY'));
 insert into Liga values (3, 1, 20152016, to_date('22/9/2015','DD/MM/YYYY'), to_date('8/10/2016','DD/MM/YYYY'));
 insert into Liga values (4, 2, 20162017, to_date('9/10/2016','DD/MM/YYYY'), to_date('26/11/2017','DD/MM/YYYY'));
 insert into Liga values (5, 1, 20172018, to_date('27/11/2017','DD/MM/YYYY'), to_date('12/12/2018','DD/MM/YYYY'));
-
+End;
+/
 --Jogo (ID_Jogo, Id_Equipa_Casa, Id_Equipa_Visitante, Id_Liga, N_Golos_Casa, N_Golos_Visitante, data_)
+Begin
 insert into Jogo values (1, 1, 6, 3, 4, 3, to_date('2016-01-06 07:39:31', 'yyyy-mm-dd hh24:mi:ss'));
 insert into Jogo values (2, 2, 6, 1, 5, 3, to_date('2014-03-03 23:48:39', 'yyyy-mm-dd hh24:mi:ss'));
 insert into Jogo values (3, 3, 11, 4, 5, 4, to_date('2017-11-05 09:01:25', 'yyyy-mm-dd hh24:mi:ss'));
@@ -195,16 +208,20 @@ insert into Jogo values (22, 20, 15, 5, 3, 5, to_date('2018-11-12 20:36:14', 'yy
 insert into Jogo values (23, 20, 15, 5, 3, 5, to_date('2018-11-13 22:36:14', 'yyyy-mm-dd hh24:mi:ss'));
 insert into Jogo values (24, 20, 15, 5, 3, 5, to_date('2018-11-24 22:36:14', 'yyyy-mm-dd hh24:mi:ss'));
 insert into Jogo values (25, 14, 15, 5, 3, 5, to_date('2018-11-24 22:36:14', 'yyyy-mm-dd hh24:mi:ss'));
-
+End;
+/
 --Sanção Disciplinar (Id_Sancao, Id_Jogador, Id_Jogo, Inicio, Fim, Tipo, Id_Jogo)
+Begin
 insert into Sancao_Disciplinar values(1,51,8,to_date('2018-11-22','YYYY-MM-DD'), null, 'Vermelho');
 insert into Sancao_Disciplinar values(2,51,8,to_date('2018-5-12','YYYY-MM-DD'), null, 'Amarelo');
 insert into Sancao_Disciplinar values(3,65,20,to_date('2018-5-14','YYYY-MM-DD'), null, 'Amarelo');
 insert into Sancao_Disciplinar values(4,65,20,to_date('2018-6-12','YYYY-MM-DD'), null, 'Amarelo');
 insert into Sancao_Disciplinar values(5,57,5,to_date('2018-11-18','YYYY-MM-DD'), null, 'Vermelho');
 insert into Sancao_Disciplinar values(6,54,9,to_date('2018-5-12','YYYY-MM-DD'), null, 'Vermelho');
-
+End;
+/
 --Convocado (Id_Jogo, Id_Jogador)
+Begin
 insert into Convocado values (5, 13);
 insert into Convocado values (17, 13);
 insert into Convocado values (19, 13);
@@ -218,14 +235,18 @@ insert into Convocado values (5, 57);
 insert into Convocado values (14, 57);
 insert into Convocado values (21, 57);
 insert into Convocado values (22, 57);
-
+End;
+/
 --Classificações (Id_Classificação, Id_Liga, Id_Equipa, N_Golos_Marcados, N_Golos_Sofridos, N_Jogos, N_Pontos, N_Jogos_Ganhos, N_Jogos_Perdidos)
+Begin
 insert into classificacao values (1,5,1,3,32,5,36,1,2);
 insert into classificacao values (2,5,2,37,2,12,86,3,8);
 insert into classificacao values (3,5,3,23,14,8,2,5,5);
 insert into classificacao values (4,2,4,54,9,7,7,1,1);
 insert into classificacao values (5,4,5,12,4,6,2,4,2);
 insert into classificacao values (6,4,2,5,2,12,23,3,8);
+End;
+/
 
 --Golo (Id_Jogo,Id_Jogador,Temp_Jogo)
 insert into Golo values (15, 18, 5614);
