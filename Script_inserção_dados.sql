@@ -212,12 +212,12 @@ End;
 /
 --Sanção Disciplinar (Id_Sancao, Id_Jogador, Id_Jogo, Inicio, Fim, Tipo, Id_Jogo)
 Begin
-insert into Sancao_Disciplinar values(1,51,8,to_date('2018-11-22','YYYY-MM-DD'), null, 'Vermelho');
-insert into Sancao_Disciplinar values(2,51,8,to_date('2018-5-12','YYYY-MM-DD'), null, 'Amarelo');
-insert into Sancao_Disciplinar values(3,65,20,to_date('2018-5-14','YYYY-MM-DD'), null, 'Amarelo');
-insert into Sancao_Disciplinar values(4,65,20,to_date('2018-6-12','YYYY-MM-DD'), null, 'Amarelo');
-insert into Sancao_Disciplinar values(5,57,5,to_date('2018-11-18','YYYY-MM-DD'), null, 'Vermelho');
-insert into Sancao_Disciplinar values(6,54,9,to_date('2018-5-12','YYYY-MM-DD'), null, 'Vermelho');
+insert into Sancao_Disciplinar values(1,51,8,to_date('2018-11-22','YYYY-MM-DD'), null);
+insert into Sancao_Disciplinar values(2,51,8,to_date('2018-5-12','YYYY-MM-DD'), null);
+insert into Sancao_Disciplinar values(3,65,20,to_date('2018-5-14','YYYY-MM-DD'), null);
+insert into Sancao_Disciplinar values(4,65,20,to_date('2018-6-12','YYYY-MM-DD'), null);
+insert into Sancao_Disciplinar values(5,57,5,to_date('2018-11-18','YYYY-MM-DD'), null);
+insert into Sancao_Disciplinar values(6,54,9,to_date('2018-5-12','YYYY-MM-DD'), null);
 End;
 /
 --Convocado (Id_Jogo, Id_Jogador)
@@ -271,6 +271,11 @@ insert into Golo values (48, 1, 3024);
 insert into Golo values (45, 4, 6942);
 insert into Golo values (16, 19, 428);
 insert into Golo values (77, 8, 3527);
+insert into Golo values (59, 12, 1463);
+insert into Golo values (65, 17, 6122);
+insert into Golo values (78, 18, 6445);
+insert into Golo values (9, 6, 2036);
+insert into Golo values (15, 18, 6847);
 
 
 
@@ -2096,9 +2101,3 @@ insert into Golo values (14, 3, 1839);
 insert into Golo values (32, 1, 4316);
 insert into Golo values (78, 6, 1147);
 insert into Golo values (9, 2, 2338);
-
-insert into Golo values (59, 12, 1463);
-insert into Golo values (65, 17, 6122);
-insert into Golo values (78, 18, 6445);
-insert into Golo values (9, 6, 2036);
-insert into Golo values (15, 18, 6847);

@@ -186,5 +186,7 @@ create table Melhores_Goleadores(
 );
 
 create table Avisos(
-    IdAviso number(5) primary key
+    Id_Aviso number(5) primary key,
+    Id_Pessoa number(5) not null,
+    Mensagem varchar2(1000) not null
 );
