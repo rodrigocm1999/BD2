@@ -76,7 +76,55 @@ begin
     select count(codigo_livro) into quant from livros
         where codigo_autor=id;
         
+    if quant = 0 then
+        raise_application_error(-20800,'Não escreveu livros');
+    end if;
+    
     return quant;
 end;
 /
-select ficha5ex6('Sérgio Sousa') from dual;
+select ficha5ex6('Eurico Fonseca') from dual;
+--ex7
+create or replace function ficha5ex7(id_cliente number) return varchar2 as
+    nome varchar2(500);
+    cod_livro number(8);
+    
+    cursor cur_codigo_livro is
+        select codigo_livro into cod_livro
+        from vendas 
+        where codigo_cliente = id_cliente
+        order by data_venda;
+begin
+    for item in cur_codigo_livro loop
+        cod_livro:= item.codigo_livro;
+        exit;
+    end loop;
+   
+   select titulo into nome from livros where livros.codigo_livro = cod_livro;
+   
+   if nome is null or nome = '' then
+        return 'Não encontrado';
+   end if;
+   
+   return nome;
+end;
+/
+select ficha5ex7(6000) from dual;
+--ex8
+create or replace function ficha5ex8(cod_editora number) return number as
+    quant number(8);  
+begin
+    select sum(quantidade*preco_unitario) into quant
+    from (
+        select codigo_venda
+        from vendas,livros
+        where vendas.codigo_livro=livros.codigo_livro and codigo_editora = cod_editora
+    )x , vendas
+    where vendas.codigo_venda = x.codigo_venda;
+    return quant;
+end;
+/
+select ficha5ex8(1) from dual;
+
+
+

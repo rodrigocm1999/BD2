@@ -1,4 +1,10 @@
+set serveroutput on;
+begin
+dbms_output.put_line('');dbms_output.put_line('');dbms_output.put_line('Start');dbms_output.put_line('Start');dbms_output.put_line('Start');
+end;
+/
 --Triggers importantes para o funcionamento
+-- p)   {
 create or replace procedure jogador_equipa_check(id_jogo in number,id_pessoa in number) as
     equipa_A number;
     equipa_B number;
@@ -27,30 +33,36 @@ begin
     jogador_equipa_check(:new.id_jogo,:new.id_pessoa);
 end;
 /
+-- }
+------------------------------------------
 --Triggers pedidos para o trabalho
-create or replace trigger golos_marcados
-    after insert on golo for each row
+create or replace trigger golos_marcados -- Ready
+    instead of insert on golos for each row
 declare
     cursor cur is
-        select jogador.id_jogador as id_jogador
+        select jogador.id_jogador as id_jogador,count(golo.id_jogo) as quant
         from jogador,golo
-        where golo.id_jogador=jogador.id_jogador        
+        where golo.id_jogador=jogador.id_jogador  
         group by jogador.id_jogador,jogador.nome
         order by count(golo.id_jogo) desc;
     counter number := 0;
 begin
+
+    insert into golo values(:new.id_jogador,:new.id_jogo,:new.temp_jogo);
+
     delete from melhores_goleadores;
     for item in cur loop
         counter := counter + 1;
         if counter>10 then
             exit;
         end if;
-        insert into melhores_goleadores values(counter,item.id_jogador);    
+        insert into melhores_goleadores values(counter,item.id_jogador,item.quant);    
     end loop;    
 end;
 /
-create or replace trigger n_jogadores_estrangeiros
-    before insert or update of id_equipa on jogador for each row
+
+create or replace trigger n_jogadores_estrangeiros -- Ready
+    before insert or update of id_equipa on pessoa for each row
 declare
     quant number;
 begin
@@ -65,11 +77,12 @@ begin
     end if;
 end;
 /
-create or replace function vermelhos_jogador(id_pes number) return date as
+
+create or replace function vermelhos_jogador(id_pes number) return date as -- Ready lacks testing
     dat date;
 Begin
     select max(fim) into dat from sancao_disciplinar sandis 
-        where tipo like 'Vermelho' and id_pessoa=id_pes and fim!=null;
+        where id_pessoa=id_pes and fim!=null;
     
     if dat = null then
         return to_date('0000','YYYY');
@@ -77,20 +90,90 @@ Begin
     return dat;
 End;
 /
-create or replace trigger max_cartoes
-    after insert on sancao_disciplinar for each row
+-- função vermelhos jogador é necesária para o funcionamento do trigger max_cartoes
+create or replace trigger max_cartoes -- Ready lacks testing
+    instead of insert on cartoes for each row
 declare
     quant number;
 begin
     select count(id_pessoa) into quant
-        from sancao_disciplinar
-        where tipo like 'Amarelo' and id_pessoa= :new.id_pessoa      
-            and inicio>vermelhos_jogador(:new.id_pessoa)
-        group by id_jogador;
+        from cartoes
+        where id_pessoa= :new.id_pessoa      
+            and vermelhos_jogador(:new.id_pessoa)< (select data_ from jogo where jogo.id_jogo=cartoes.id_jogo)
+        group by id_pessoa;
         
     if quant = 2 then
         insert into sancao_disciplinar values ((select max(id_sancao)+1  from sancao_disciplinar)
-                                                ,:new.id_pessoa,sysdate,null,'Vermelho',:new.id_jogo);
+                                                ,:new.id_pessoa,:new.id_jogo,sysdate,null);
     end if;
 end;
 /
+
+
+create or replace trigger treinador -- Nao existem nenhumas garantias que está correto
+    after insert on Sancao_Disciplinar for each row 
+declare
+    id_adjunto number(6);
+    idEquipa number(6);
+begin    
+    update Pessoa set tipo = 'Adjunto' where id_pessoa = :new.id_pessoa;
+
+    select id_equipa into idEquipa
+    from treinador
+    where id_treinador=:new.id_pessoa;
+
+    select id_treinador into id_adjunto
+    from treinador 
+    where id_equipa=idEquipa and id_treinador!= :new.id_pessoa;
+
+    update Pessoa set tipo = 'Principal' where id_pessoa = id_adjunto;
+end;
+/
+
+create or replace trigger passaram2jogos -- Nao existem nenhumas garantias que está correto
+    instead of insert on Jogos for each row
+declare
+    idSancao number(6);
+    InicioUltimaSancao date;
+    FimUltimaSancao date;
+    nJogosDesdeInicio number(5);
+
+begin
+    insert into Jogo values(:new.id_jogo,:new.id_equipa_casa,:new.id_equipa_visitante,:new.id_liga,:new.n_golos_casa,:new.n_golos_visitante,:new.data_);
+
+    
+    for treinador in (select * from treinador) loop
+        if treinador.id_equipa in (:new.id_equipa_casa,:new.id_equipa_visitante) then
+            
+            select id_sancao,inicio,fim into idSancao,InicioUltimaSancao,FimUltimaSancao
+                from sancao_disciplinar sandis
+                where ROWNUM < 2 and id_pessoa=treinador.id_treinador
+                order by sandis.inicio desc;
+            
+            if FimUltimaSancao is NULL then
+                continue; -- Próóóxximo
+            end if;
+            
+            select count(id_jogo) into nJogosDesdeInicio 
+            from Jogo
+            where treinador.id_equipa in (id_equipa_casa,id_equipa_visitante)
+                and data_ > InicioUltimaSancao;
+            
+            if nJogosDesdeInicio >= 2 then
+                update Sancao_disciplinar set fim = :new.data_ where id_sancao=idSancao;
+            end if;
+         
+        end if;
+    end loop;
+    
+    
+end;
+/
+
+
+
+
+
+
+
+

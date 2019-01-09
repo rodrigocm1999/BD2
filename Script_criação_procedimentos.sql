@@ -1,3 +1,8 @@
+set serveroutput on;
+begin
+dbms_output.put_line('');dbms_output.put_line('');dbms_output.put_line('Start');dbms_output.put_line('Start');dbms_output.put_line('Start');
+end;
+/
 --Auxiliares
 create or replace procedure updateGolosJogos as
 
@@ -6,7 +11,7 @@ begin
 end;
 /
 --Pedidas Para o Trabalho
-create or replace procedure epoca_desportiva(epoca_ number) as
+create or replace procedure epoca_desportiva(epoca_ number) as -- Ready
     melhor_1 number;
     melhor_2 number;
     melhor_3 number;
@@ -26,18 +31,15 @@ create or replace procedure epoca_desportiva(epoca_ number) as
         order by n_pontos Desc;
 begin
     open curAsc;
-
     fetch curAsc into melhor_1;
     fetch curAsc into melhor_2;
     fetch curAsc into melhor_3;
-
     close curAsc;
-    open curDesc;
     
+    open curDesc;
     fetch curDesc into pior_1;
     fetch curDesc into pior_2;
     fetch curDesc into pior_3;
-
     close curDesc;
     
     insert into melhores_piores_equipas values(epoca_,melhor_1,melhor_2,melhor_3,pior_1,pior_2,pior_3);

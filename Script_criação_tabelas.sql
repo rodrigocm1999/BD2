@@ -1,7 +1,17 @@
+set serveroutput on;
+begin
+dbms_output.put_line('');dbms_output.put_line('');dbms_output.put_line('Start');dbms_output.put_line('Start');dbms_output.put_line('Start');
+end;
+/
+--Drop de tudo
 drop view Jogador cascade constraints;
 drop view Treinador cascade constraints;
+drop view Golos cascade constraints;
+drop view Sancoes_Disciplinares cascade constraints;
+drop view Cartoes cascade constraints;
+drop view Jogos cascade constraints;
 drop table Avisos cascade constraints;
-drop table Cartoes cascade constraints;
+drop table Cartao cascade constraints;
 drop table Transferencias cascade constraints;
 drop table Melhores_Goleadores cascade constraints;
 drop table Melhores_Piores_Equipas cascade constraints;
@@ -16,6 +26,7 @@ drop table Liga cascade constraints;
 drop table Pessoa cascade constraints;
 drop table Golos_Guarda_Redes cascade constraints;
 drop table Equipa cascade constraints;
+drop table Substituicao cascade constraints;
 
 ------------------------------------------------------------------------
 create table Equipa(
@@ -34,17 +45,18 @@ create table Pessoa(
     Posicao varchar2(80) not null,
     Nacionalidade varchar2(80) not null,
     Tipo varchar2(80) not null check ( Tipo='Jogador' or Tipo='Treinador' ),
+    Localidade varchar2(80) not null,
     
     constraint FK_Id_Equipa_Pessoa foreign key(Id_Equipa) references Equipa(Id_Equipa)
 );
 
 create view Jogador as 
-    select Id_Pessoa as Id_Jogador,Id_Equipa,Nome,Idade,Posicao,Nacionalidade
+    select Id_Pessoa as Id_Jogador,Id_Equipa,Nome,Idade,Posicao,Nacionalidade,Localidade
     from Pessoa
     where Tipo='Jogador';
 
 create view Treinador as
-    select Id_Pessoa as Id_Treinador,Id_Equipa,Nome,Idade,Posicao,Nacionalidade
+    select Id_Pessoa as Id_Treinador,Id_Equipa,Nome,Idade,Posicao,Nacionalidade,Localidade
     from Pessoa
     where Tipo='Treinador';
 
@@ -78,6 +90,9 @@ create table Jogo(
     constraint Id_Liga foreign key(Id_Liga) references Liga(Id_Liga)
 );
 
+create view Jogos as
+    select * from Jogo;
+
 create table Convocado(
     Id_Jogo number(5) not null,
     Id_Jogador number(5) not null,
@@ -96,6 +111,8 @@ create table Golo(
     constraint FK_Id_Jogador_Golo foreign key(Id_Jogador) references Pessoa(Id_Pessoa),
     constraint FK_Id_Jogo_Golo foreign key(Id_Jogo) references Jogo(Id_jogo)
 );
+create view Golos as 
+    select * from golo;
 
 create table Classificacao(
     Id_Classificacao number(5) not null primary key,
@@ -122,7 +139,10 @@ create table Sancao_Disciplinar(
     constraint FK_Id_Jogador_Sancao foreign key(Id_Pessoa) references Pessoa(Id_Pessoa),
     constraint FK_Id_Jogo_Sancao foreign key(Id_Jogo) references Jogo(Id_Jogo)
 );
-create table Cartoes(
+create view Sancoes_Disciplinares as 
+    select * from Sancao_Disciplinar;
+
+create table Cartao(
     Id_Cartao number(5) not null primary key,
     Id_Pessoa number(5) not null,
     Id_Jogo number(5) not null,
@@ -130,6 +150,8 @@ create table Cartoes(
 
     constraint FK_Id_Pessoa_Cartoes foreign key(Id_Pessoa) references Pessoa(Id_Pessoa)
 );
+create view Cartoes as
+    select * from Cartao;
 
 create table Equipas_Liga(
     Id_Equipa number(5) not null,
@@ -181,6 +203,7 @@ create table Melhores_Piores_Equipas(
 create table Melhores_Goleadores(
     Lugar number(2) primary key,
     ID_Jogador number(5) not null,
+    N_Golos number(4) not null,
     
     constraint FK_ID_Jogador_Melhores_Gols foreign key(Id_Jogador) references Pessoa(Id_Pessoa)
 );
@@ -189,4 +212,16 @@ create table Avisos(
     Id_Aviso number(5) primary key,
     Id_Pessoa number(5) not null,
     Mensagem varchar2(1000) not null
+);
+
+create table Substituicao(
+    id_Substituicao number(9) not null primary key,
+    id_jogo number(9) not null,
+    id_jogador  number(9) not null,
+    id_jogador_substituido  number(9) not null,
+    tempo_jogo number(9) not null,
+    
+    constraint FK_id_jogo_substituicao foreign Key(id_jogo) references Jogo(id_jogo),
+    constraint FK_id_jogador_substituicao foreign Key(id_jogador) references Pessoa(id_Pessoa),
+    constraint FK_id_joga_subst_substituicao foreign Key(id_jogador_substituido) references Pessoa(id_Pessoa)
 );

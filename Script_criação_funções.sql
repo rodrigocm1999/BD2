@@ -1,6 +1,11 @@
---Funcões de Ajuda às vistas
+set serveroutput on;
+begin
+dbms_output.put_line('');dbms_output.put_line('');dbms_output.put_line('Start');dbms_output.put_line('Start');dbms_output.put_line('Start');
+end;
+/
+--Funcões de Suporte às Vistas
 
-create or replace function epocaAtual(quantos number default 0) return number as
+create or replace function epocaAtual(quantos number default 0) return number as -- Ready
     epoca number := 0;
     anoAtual number;
 Begin
@@ -10,7 +15,7 @@ Begin
     return epoca;
 End;
 /
-create or replace function N_JGCL (idEquipa number, Epoca number) return number as
+create or replace function N_JGCL (idEquipa number, Epoca number) return number as -- Ready
     temp number := 0;
     ConsWins number := 0;
     
@@ -45,8 +50,7 @@ create or replace function numero_golos(posicao varchar2) return number as -- Re
         where jogador.posicao=pos;
 Begin
     for item in cur(posicao) loop
-        select count(golo.id_jogo)
-        into temp
+        select count(golo.id_jogo) into temp
         from golo,jogo
         where golo.id_jogador=item.id_jogador and jogo.id_jogo=golo.id_jogo 
             and jogo.data_>= add_months(sysdate,-3);
@@ -57,17 +61,18 @@ Begin
     return amount;
 End;
 /
-select numero_golos('Extremo') from dual;
-create or replace function numero_amarelos(jog_nome varchar2,dataInicio date,dataFim date) return number as
+--select numero_golos('Extremo') from dual;
+
+create or replace function numero_amarelos(jog_nome varchar2,dataInicio date,dataFim date) return number as --Ready needs more testing
     id_jog number;
     eq_jog number;
     counter number := 0;
     amount number := 0;
-    cursor cur(jogo_id number) is
-        select sandis.id_jogo as id_jogo
-        from sancao_disciplinar sandis
-        where sandis.id_pessoa=jogo_id and tipo='Amarelo'
-            and jogo_id=sandis.id_jogo;
+    
+    cursor cur(jogador_id number) is
+        select cart.id_jogo as id_jogo
+        from cartoes cart
+        where cart.id_pessoa=jogador_id;
 Begin
     select id_jogador,id_equipa into id_jog,eq_jog
     from jogador
@@ -85,9 +90,15 @@ Begin
         end if;    
     end loop;
     return amount;
+    
+Exception
+   when TOO_MANY_ROWS then
+      return -1;
 End;
 /
-create or replace function ultimo_jogo(nome_equipa varchar2) return date as
+--select numero_amarelos('Dell',TO_DATE('2003/07/09', 'yyyy/mm/dd'),TO_DATE('2003/07/09', 'yyyy/mm/dd')) from dual;
+
+create or replace function ultimo_jogo(nome_equipa varchar2) return date as -- Ready
     id_eq number;
     cursor cur(idEquipa number) is
         select data_
@@ -99,33 +110,68 @@ Begin
     for item in cur(id_eq) loop
         return item.data_;  
     end loop;
+Exception
+    when TOO_MANY_ROWS then
+        return -1;
 End;
 /
-create or replace function primeira_substituição return number as
+--select ultimo_jogo('AAC') as "ultimo jogo perdido" from dual;
 
+
+create or replace function primeira_substituição(jogador1 number) return number as -- Have to check
+    jg1 number;
+    cursor cur(joga number) is
+        SELECT tempo_jogo
+        FROM SUBSTITUICAO
+        WHERE SUBSTITUICAO.ID_JOGADOR = joga;
 Begin
-
+    SELECT tempo_jogo into jg1 from Substituicao where id_jogador = jogador1;
+    FOR item in cur(jg1) loop
+        return item.tempo_jogo;
+    end loop;
 End;
 /
-create or replace function clubes_cidade(place varchar2) return number as
 
+create or replace function clubes_cidade(place varchar2) return varchar2 as -- Nao esta completamente correto
+    cursor cur(place_ varchar2) is
+        select posicao,count(posicao) as quant
+        from (select jogador.id_jogador,jogador.posicao,jogador.localidade 
+            from jogador,equipa,liga
+            where equipa.id_equipa = jogador.id_equipa 
+                and liga.id_liga = equipa.id_equipa and liga.epoca = epocaAtual(-1)
+        ) x
+        where localidade = place_
+        group by posicao 
+        order by quant desc;
 Begin
-
+for item in cur(place) loop
+    return item.posicao;
+end loop;
 End;
 /
+--select clubes_cidade('Lisboa') from dual;
+    
 create or replace function idade(idade_ number, dataInicio date, dataFim date) return number as -- Incompleto falta excluir  jogadores a menos de duas epocas no clube
     total number;
 Begin
-    select sum(x.count_) into total
-    from (select count(golo.id_jogo) as count_
-        from jogador,golo,jogo,liga
-        where jogador.idade=idade_ and golo.id_jogador=jogador.id_jogador and jogo.id_jogo=golo.id_jogo
-            and jogo.data_ between dataInicio and dataFim
-            and liga.id_liga=jogo.id_liga and liga.epoca=epocaAtual()
-        group by jogador.id_jogador) x;
+    select sum(y.golos) into total
+        from(
+            select count(x.id_jogador) as golos
+            from(
+                select jog.id_jogador as id_jogador, jog.nome as nome
+                from (select id_jogador,nome from jogador where jogador.idade=23)jog,golo,jogo,liga
+                where golo.id_jogador=jog.id_jogador and jogo.id_jogo=golo.id_jogo
+                   and liga.id_liga=jogo.id_liga and liga.epoca=epocaAtual(-2) -- Mudar para 0 para apresentar resultados da epoca atual
+                ) x                                                             -- Na epoca presente nao existem resultados a serem mostrados
+            group by id_jogador,nome
+            order by count(x.id_jogador)
+        ) y;
+    
     return total;
 End;
 /
+--select idade(12,TO_DATE('2003/07/09', 'yyyy/mm/dd'),TO_DATE('2003/07/09', 'yyyy/mm/dd')) as resultado from dual;
+
 
 
 
