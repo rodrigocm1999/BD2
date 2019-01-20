@@ -84,12 +84,14 @@ Begin
     select max(fim) into dat from sancao_disciplinar sandis 
         where id_pessoa=id_pes and fim!=null;
     
-    if dat = null then
-        return to_date('0000','YYYY');
+    if dat is null then
+        return to_date('01','YYYY');
     end if;
     return dat;
 End;
 /
+--select vermelhos_jogador(15) from dual;
+
 -- função vermelhos jogador é necesária para o funcionamento do trigger max_cartoes
 create or replace trigger max_cartoes -- Ready lacks testing
     instead of insert on cartoes for each row
@@ -103,32 +105,41 @@ begin
         group by id_pessoa;
         
     if quant = 2 then
-        insert into sancao_disciplinar values ((select max(id_sancao)+1  from sancao_disciplinar)
-                                                ,:new.id_pessoa,:new.id_jogo,sysdate,null);
+        insert into sancao_disciplinar values ((select max(id_sancao)+1  from sancao_disciplinar) ,:new.id_pessoa,:new.id_jogo,sysdate,null);
+    else
+        insert into cartao values(:new.id_cartao,:new.id_pessoa,:new.id_jogo,:new.tempo_jogo);
     end if;
 end;
 /
 
-
 create or replace trigger treinador -- Nao existem nenhumas garantias que está correto
-    after insert on Sancao_Disciplinar for each row 
+    after insert on Sancao_Disciplinar for each row
 declare
     id_adjunto number(6);
     idEquipa number(6);
-begin    
-    update Pessoa set tipo = 'Adjunto' where id_pessoa = :new.id_pessoa;
+    tipoP varchar2(250);
+begin
+    
+    select tipo into tipoP from pessoa where pessoa.id_pessoa = :new.id_pessoa;
+    
+    if tipoP = 'Jogador' then
+        return;
+    end if;
+
+    update Pessoa set posicao = 'Suspenso' where id_pessoa = :new.id_pessoa;
 
     select id_equipa into idEquipa
     from treinador
     where id_treinador=:new.id_pessoa;
-
+    
     select id_treinador into id_adjunto
     from treinador 
     where id_equipa=idEquipa and id_treinador!= :new.id_pessoa;
-
-    update Pessoa set tipo = 'Principal' where id_pessoa = id_adjunto;
+    
+    update Pessoa set posicao = 'Principal' where id_pessoa = id_adjunto;
 end;
 /
+--insert into Sancao_Disciplinar values(1,51,8,to_date('2018-11-22','YYYY-MM-DD'), null);
 
 create or replace trigger passaram2jogos -- Nao existem nenhumas garantias que está correto
     instead of insert on Jogos for each row

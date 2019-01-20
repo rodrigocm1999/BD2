@@ -3,7 +3,7 @@ begin
 dbms_output.put_line('');dbms_output.put_line('');dbms_output.put_line('Start');dbms_output.put_line('Start');dbms_output.put_line('Start');
 end;
 /
---Funcões de Suporte às Vistas
+--Func?es de Suporte ?s Vistas
 
 create or replace function epocaAtual(quantos number default 0) return number as -- Ready
     epoca number := 0;
@@ -40,7 +40,7 @@ Begin
     return ConsWins;
 End;
 /
--- Funções Pedidas para o Trabalho
+-- Fun??es Pedidas para o Trabalho
 
 create or replace function numero_golos(posicao varchar2) return number as -- Ready
     temp number := 0;
@@ -96,7 +96,7 @@ Exception
       return -1;
 End;
 /
---select numero_amarelos('Dell',TO_DATE('2003/07/09', 'yyyy/mm/dd'),TO_DATE('2003/07/09', 'yyyy/mm/dd')) from dual;
+--select numero_amarelos('Dell',TO_DATE('2003/07/09', 'yyyy/mm/dd'),TO_DATE('2016/07/09', 'yyyy/mm/dd')) as "Numero amarelos do jogador" from dual;
 
 create or replace function ultimo_jogo(nome_equipa varchar2) return date as -- Ready
     id_eq number;
@@ -108,29 +108,24 @@ create or replace function ultimo_jogo(nome_equipa varchar2) return date as -- R
 Begin
     select id_equipa into id_eq from equipa where nome=nome_equipa;
     for item in cur(id_eq) loop
-        return item.data_;  
+        return item.data_;
     end loop;
 Exception
     when TOO_MANY_ROWS then
-        return -1;
+        return null;
 End;
 /
 --select ultimo_jogo('AAC') as "ultimo jogo perdido" from dual;
 
 
-create or replace function primeira_substituição(jogador1 number) return number as -- Have to check
-    jg1 number;
-    cursor cur(joga number) is
-        SELECT tempo_jogo
-        FROM SUBSTITUICAO
-        WHERE SUBSTITUICAO.ID_JOGADOR = joga;
+create or replace function primeira_substituicao(jogo_id number) return number as -- Have to check
+    tempo number;
 Begin
-    SELECT tempo_jogo into jg1 from Substituicao where id_jogador = jogador1;
-    FOR item in cur(jg1) loop
-        return item.tempo_jogo;
-    end loop;
+    select tempo_jogo into tempo from substituicao where id_jogo = jogo_id;
+    return tempo;
 End;
 /
+--select primeira_substituicao(25) as "Tempo de Jogo" from dual;
 
 create or replace function clubes_cidade(place varchar2) return varchar2 as -- Nao esta completamente correto
     cursor cur(place_ varchar2) is
@@ -173,20 +168,26 @@ End;
 --select idade(12,TO_DATE('2003/07/09', 'yyyy/mm/dd'),TO_DATE('2003/07/09', 'yyyy/mm/dd')) as resultado from dual;
 
 
-
-
-
 create or replace function tempo_medio_venda(idEquipa number) return number as
-
+MEDIA NUMBER;
+SANCAO NUMBER;
 Begin
-
+    SELECT COUNT(S.ID_SANCAO) INTO SANCAO
+        FROM
+            sancao_disciplinar S
+        WHERE
+             S.ID_JOGO = (SELECT J.ID_JOGO FROM JOGO J WHERE J.ID_EQUIPA_CASA = idEquipa);
+             
+   IF SANCAO = 0 THEN
+        SELECT AVG(G.TEMP_JOGO) INTO MEDIA
+            FROM 
+                 GOLO G
+            WHERE
+                G.ID_JOGO = (SELECT J.ID_JOGO FROM JOGO J WHERE J.ID_EQUIPA_CASA = idEquipa);
+        RETURN TRUNC(MEDIA/60, 2);
+ELSE 
+   RETURN MEDIA;
+END IF;
 End;
 /
-create or replace function AMeuCriterio return number as
-
-Begin
-
-End;
-/
-
-
+--SELECT tempo_medio_venda(3) AS "Tempo Medio Golos Por Jogo" FROM DUAL;

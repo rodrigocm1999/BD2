@@ -1,3 +1,8 @@
+set serveroutput on;
+begin
+dbms_output.put_line('');dbms_output.put_line('');dbms_output.put_line('Start');dbms_output.put_line('Start');dbms_output.put_line('Start');
+end;
+/
 
 --Equipas
 Begin
@@ -21,6 +26,7 @@ insert into Equipa values (17, 'cmawsong', 'Menggala',2,'Inglaterra');
 insert into Equipa values (18, 'seschalotteh', 'San Miguel',1,'França');
 insert into Equipa values (19, 'plearnedi', 'Murów',2,'Inglaterra');
 insert into Equipa values (20, 'tturrij', 'Tiberias',2,'Inglaterra');
+insert into Equipa values (220,'ACC','NoWhere',2,'Place');
 End;
 /
 --Jogador (Id_Jogador, Id_Equipa, Nome, Idade, Posicao, Nacionalidade)
@@ -105,10 +111,9 @@ insert into Pessoa values (77, 8, 'Rudie', 22,'Extremo', 'Portugal', 'Jogador', 
 insert into Pessoa values (78, 18, 'Bendick', 34,'Extremo', 'Inglaterra', 'Jogador', 'Porto');
 insert into Pessoa values (79, 2, 'Filbert', 29,'Extremo', 'Portugal', 'Jogador', 'Porto');
 insert into Pessoa values (80, 14, 'Miles', 26,'Extremo', 'França', 'Jogador', 'Porto');
-End;
-/
+
+
 --Treinadores (Id_Pessoa, Id_Equipa, Nome, Idade, Posicao, Nacionalidade, Tipo, Localidade)
-Begin
 insert into Pessoa values (81, 1, 'Grover', 32, 'Principal', 'Portugal', 'Treinador', 'Lisboa');
 insert into Pessoa values (82, 2, 'Gussie', 44,'Principal', 'China', 'Treinador', 'Lisboa');
 insert into Pessoa values (83, 3, 'Carmelina', 26,'Principal', 'Portugal', 'Treinador', 'Lisboa');
@@ -181,6 +186,14 @@ insert into Liga values (4, 2, 20162017, to_date('9/10/2016','DD/MM/YYYY'), to_d
 insert into Liga values (5, 1, 20172018, to_date('27/11/2017','DD/MM/YYYY'), to_date('12/12/2018','DD/MM/YYYY'));
 End;
 /
+--Equipas_Liga
+Begin
+insert into equipas_liga values(5,1);
+insert into equipas_liga values(5,2);
+insert into equipas_liga values(2,1);
+insert into equipas_liga values(2,2);
+End;
+/
 --Jogo (ID_Jogo, Id_Equipa_Casa, Id_Equipa_Visitante, Id_Liga, N_Golos_Casa, N_Golos_Visitante, data_)
 Begin
 insert into Jogo values (1, 1, 6, 3, 4, 3, to_date('2016-01-06 07:39:31', 'yyyy-mm-dd hh24:mi:ss'));
@@ -210,14 +223,12 @@ insert into Jogo values (24, 20, 15, 5, 3, 5, to_date('2018-11-24 22:36:14', 'yy
 insert into Jogo values (25, 14, 15, 5, 3, 5, to_date('2018-11-24 22:36:14', 'yyyy-mm-dd hh24:mi:ss'));
 End;
 /
---Sanção Disciplinar (Id_Sancao, Id_Jogador, Id_Jogo, Inicio, Fim, Tipo, Id_Jogo)
+--Sanção Disciplinar (Id_Sancao, Id_Pessoa, Id_Jogo, Inicio, Fim)
 Begin
-insert into Sancao_Disciplinar values(1,51,8,to_date('2018-11-22','YYYY-MM-DD'), null);
-insert into Sancao_Disciplinar values(2,51,8,to_date('2018-5-12','YYYY-MM-DD'), null);
-insert into Sancao_Disciplinar values(3,65,20,to_date('2018-5-14','YYYY-MM-DD'), null);
-insert into Sancao_Disciplinar values(4,65,20,to_date('2018-6-12','YYYY-MM-DD'), null);
-insert into Sancao_Disciplinar values(5,57,5,to_date('2018-11-18','YYYY-MM-DD'), null);
-insert into Sancao_Disciplinar values(6,54,9,to_date('2018-5-12','YYYY-MM-DD'), null);
+insert into Sancao_Disciplinar values(1,1,8,to_date('2018-11-22','YYYY-MM-DD'), null);
+insert into Sancao_Disciplinar values(2,15,15,to_date('2018-5-14','YYYY-MM-DD'), null);
+insert into Sancao_Disciplinar values(3,20,18,to_date('2018-11-18','YYYY-MM-DD'), null);
+insert into Sancao_Disciplinar values(4,90,10,to_date('2018-5-12','YYYY-MM-DD'), null);
 End;
 /
 --Convocado (Id_Jogo, Id_Jogador)
@@ -245,6 +256,21 @@ insert into classificacao values (3,5,3,23,14,8,2,5,5);
 insert into classificacao values (4,2,4,54,9,7,7,1,1);
 insert into classificacao values (5,4,5,12,4,6,2,4,2);
 insert into classificacao values (6,4,2,5,2,12,23,3,8);
+--insert into classificacao values (4,5,4,54,9,7,7,1,1);
+--insert into classificacao values (5,5,5,12,4,6,2,4,2);
+--insert into classificacao values (6,5,2,5,2,12,86,3,8);
+End;
+/
+--Jogo_Classificação
+Begin
+insert into jogo_classificacao values (1,1);
+insert into jogo_classificacao values (2,1);
+insert into jogo_classificacao values (3,1);
+insert into jogo_classificacao values (4,1);
+insert into jogo_classificacao values (1,2);
+insert into jogo_classificacao values (2,2);
+insert into jogo_classificacao values (3,2);
+insert into jogo_classificacao values (4,2);
 End;
 /
 --Golos (Id_Pessoa,Id_Jogo,Temp_Jogo)
@@ -460,4 +486,7 @@ insert into Golos values (9, 2, 2338);
 end;
 /
 
+Begin
 INSERT INTO Substituicao VALUES (1,25,3,9,20);
+End;
+/

@@ -41,7 +41,6 @@ CREATE PROCEDURE PRENDAS_POR_INSTITUICAO(tipo_Prenda VARCHAR2, nomeInstit VARCHA
     naoIndPrend exception;
     pragma exception_init( naoIndPrend, -20512 );
 begin
-    delete from temp;
     for prenda in (select * from prenda where tipoPrenda = tipo_Prenda) loop
         insert into temp values (prenda.codPrenda,prendas_em_falta(prenda.codPrenda,nomeInstit),prenda.nome);     
     end loop;
@@ -54,5 +53,31 @@ exception
 end;
 /
 
-CREATE TRIGGER ALTERACAO_NPRENDAS_DOADAS
+CREATE TRIGGER ALTERACAO_NPRENDAS_DOADAS 
+    before update of nPrendas on doacao for each row
+declare
+    tipoPre varchar2(250);
+    nomeInst varchar2(250);
+begin
+    if :old.codPrenda != :new.codPrenda then
+        raise_application_error(-20533,'Não é possível alterar o código da prenda da doação');    
+    elsif :old.dataDoacao <> :new.dataDoacao then
+        raise_application_error(-20533,'Não é possível alterar a data da doação');    
+    end if; 
+
+    select tipoPrenda into tipoPre
+    from prenda
+    where codPrenda = :new.codPrenda;
+    
+    select nome into nomeInst
+    from instituicao
+    where codInstit = :new.codInstit;
+    
+
+    delete from temp where co1 = :new.codPrenda;
+    
+    prendas_por_insituticao(tipoPre,nomeInstit);
+
+end;
+/
     

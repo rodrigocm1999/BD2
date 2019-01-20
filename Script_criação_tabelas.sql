@@ -27,6 +27,7 @@ drop table Pessoa cascade constraints;
 drop table Golos_Guarda_Redes cascade constraints;
 drop table Equipa cascade constraints;
 drop table Substituicao cascade constraints;
+drop table Alertas_Treinador cascade constraints;
 
 ------------------------------------------------------------------------
 create table Equipa(
@@ -146,7 +147,7 @@ create table Cartao(
     Id_Cartao number(5) not null primary key,
     Id_Pessoa number(5) not null,
     Id_Jogo number(5) not null,
-    Temp_Jogo number(4) not null,
+    Tempo_Jogo number(4) not null,
 
     constraint FK_Id_Pessoa_Cartoes foreign key(Id_Pessoa) references Pessoa(Id_Pessoa)
 );
@@ -184,7 +185,7 @@ create table Transferencias(
 );
 
 create table Melhores_Piores_Equipas(
-    Epoca number(8) primary key,
+    Epoca number(8),
     Melhor_1 number(5),
     Melhor_2 number(5),
     Melhor_3 number(5),
@@ -224,4 +225,14 @@ create table Substituicao(
     constraint FK_id_jogo_substituicao foreign Key(id_jogo) references Jogo(id_jogo),
     constraint FK_id_jogador_substituicao foreign Key(id_jogador) references Pessoa(id_Pessoa),
     constraint FK_id_joga_subst_substituicao foreign Key(id_jogador_substituido) references Pessoa(id_Pessoa)
+);
+
+CREATE TABLE Alertas_Treinador(
+    Id_Alertas number(8) not null primary key,
+    Equipa varchar2(256) not null,
+    Epoca varchar2(256) not null,
+    Jogos_Ganhos number(8) not null,
+    Jogos_Perdidos number(8) not null,
+    Golos_Marcados number(8) not null,
+    N_Jogos number(8) not null
 );

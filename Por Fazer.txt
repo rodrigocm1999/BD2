@@ -1,13 +1,3 @@
-f) Crie a função primeira_substituição que para um determinado jogo, determine
-quantos minutos jogou o jogador que foi substituído. A função deve retornar os
-minutos ou, NULL se nenhum potencial jogador tiver sido substituído.
-	
-g) Implemente um trigger cartões que, ao inserir um cartão vermelho na ficha de um
-dado jogador na base de dados, submeta um aviso à equipa desse mesmo jogador a
-informar que não pode jogar na próxima jornada. Ao receber um cartão vermelho
-deve ainda garantir que ele se encontra no estado suspenso por 2 jogos.
-
-
 
 
 
@@ -18,15 +8,12 @@ onde treinou e por época desportiva
 
 m) Crie a função tempo_medio_venda que recebe como argumento o id de uma equipa,
 e retorna a média, em minutos, que essa equipa necessitou para marcar o primeiro
-golo com o penúltimo treinador. Considere apenas jogos em casa e que não tenham
+	golo com o penúltimo treinador. Considere apenas jogos em casa e que não tenham
 cartões vermelhos associados nesse jogo.
 
 n) Criar um procedimento que se considerem importantes para um futuro
 funcionamento do sistema.
 
-
-o) Criar uma função que considerem importante para um futuro funcionamento do
-sistema.
 
 
 
@@ -37,3 +24,4 @@ l) Criar o trigger treinador garantindo sempre que for recebida uma sanção dis
 a um treinador, com um cartão vermelho, este é automaticamente suspenso, por dois
 jogos. Também deve passar o treinador adjunto para o papel de treinador principal,
 durante o período da suspensão.
+
